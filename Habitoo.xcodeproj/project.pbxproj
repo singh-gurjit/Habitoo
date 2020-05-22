@@ -25,6 +25,7 @@
 		E2954AA8246EE3A100CF98BF /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2954AA7246EE3A100CF98BF /* DateUtil.swift */; };
 		E2954AAA246F04C000CF98BF /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2954AA9246F04C000CF98BF /* ColorUtil.swift */; };
 		E2954AAC246F0E2D00CF98BF /* DatabaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2954AAB246F0E2D00CF98BF /* DatabaseUtil.swift */; };
+		E2C3837A2478176200444F31 /* CollectionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C383792478176200444F31 /* CollectionUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		E2954AA7246EE3A100CF98BF /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		E2954AA9246F04C000CF98BF /* ColorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
 		E2954AAB246F0E2D00CF98BF /* DatabaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseUtil.swift; sourceTree = "<group>"; };
+		E2C383792478176200444F31 /* CollectionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				E2954AAF246F109D00CF98BF /* Database */,
 				E2954AA7246EE3A100CF98BF /* DateUtil.swift */,
+				E2C383792478176200444F31 /* CollectionUtil.swift */,
 				E2954AA9246F04C000CF98BF /* ColorUtil.swift */,
 			);
 			path = Util;
@@ -215,6 +218,7 @@
 				E24948CE246C73210035140D /* NewHabitView.swift in Sources */,
 				E2260685246D4FDB007948DC /* HabitDetailView.swift in Sources */,
 				E24948B8246C707D0035140D /* ContentView.swift in Sources */,
+				E2C3837A2478176200444F31 /* CollectionUtil.swift in Sources */,
 				E24948D2246CAEF90035140D /* LineGraph.swift in Sources */,
 				E2260689246D5702007948DC /* GridCalendar.swift in Sources */,
 				E2954AA8246EE3A100CF98BF /* DateUtil.swift in Sources */,

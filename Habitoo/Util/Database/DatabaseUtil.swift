@@ -14,26 +14,24 @@ class DatabaseUtil {
     
     var date = Date()
     
-    func createNewHabit(name: String, category: String, cDate: Date, reminder: String, weekDays: String) {
+    func createNewHabit(name: String, category: String, cDate: Date, isReminder: Bool,reminder: Date, weekDays: String) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let moc = appDelegate.persistentContainer.viewContext
         let habitEntity = NSEntityDescription.entity(forEntityName: "Habits", in: moc)!
         let habit = NSManagedObject(entity: habitEntity, insertInto: moc)
         
-        //format date
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d-MMM-y"
-        let stringDate = formatter.string(from: date)
-        
         //insert data
         habit.setValue(UUID(), forKey: "id")
         habit.setValue(name, forKey: "name")
-        habit.setValue(stringDate, forKey: "createdDate")
+        habit.setValue(cDate, forKey: "createdDate")
         habit.setValue(reminder, forKey: "reminderTime")
         habit.setValue(weekDays, forKey: "weekDays")
+        habit.setValue(category, forKey: "category")
+        habit.setValue(isReminder, forKey: "isReminder")
         do {
             try moc.save()
+            print("Saved..")
         } catch let error as NSError {
             print("Error while saving.. \(error.userInfo)")
         }

@@ -29,7 +29,7 @@ class DateUtil {
         let weekdays = calendar.range(of: .weekday, in: .weekOfYear, for: date)!
         let days = (weekdays.lowerBound ..< weekdays.upperBound)
             .compactMap { calendar.date(byAdding: .day, value: $0 - dayOfWeek, to: date) }
-        print(days)
+        //print(days)
         let dateObjects = days.compactMap { formatter.string(from: $0) }
         return dateObjects
     }
