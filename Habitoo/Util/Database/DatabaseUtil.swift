@@ -14,6 +14,7 @@ class DatabaseUtil {
     
     var date = Date()
     
+    //insert new record in database
     func createNewHabit(name: String, category: String, cDate: Date, isReminder: Bool,reminder: Date, weekDays: String) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -36,6 +37,23 @@ class DatabaseUtil {
             print("Error while saving.. \(error.userInfo)")
         }
         
+    }
+    
+    //fetch record from database
+    func fetchDataFromDatabase() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let moc = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        do {
+            let fetchData = try moc.fetch(request)
+            for data in fetchData as! [NSManagedObject] {
+                print(data.value(forKey: "name") as! String)
+                print(data.value(forKey: "id") as! UUID)
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
     }
     
 }

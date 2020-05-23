@@ -16,6 +16,7 @@ struct DashboardView: View {
     var presentDay: String
     var currentWeekDays = [String]()
     @State var presentDateIndex = 0
+    private var database = DatabaseUtil()
     
     init() {
         UITableView.appearance().separatorColor = .clear
@@ -23,6 +24,7 @@ struct DashboardView: View {
         UITableViewCell.appearance().backgroundColor = .clear
         presentDay = dateUtil.getCurrentDay()
         currentWeekDays = dateUtil.currentWeekDays()
+        database.fetchDataFromDatabase()
     }
     
     var body: some View {
