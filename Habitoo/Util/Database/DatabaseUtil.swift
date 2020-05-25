@@ -12,13 +12,28 @@ import SwiftUI
 
 class DatabaseUtil {
     
+    var appDelegate: AppDelegate
+    let moc: NSManagedObjectContext
+    
     var date = Date()
+    var rowFromDatabase = [Any]()
+    
+    var arrayHabitToReturn = [[Any]]()
+    var arrayHabitName = [String]()
+    var arrayHabitID = [UUID]()
+    
+    var arrayTaskToReturn = [[Any]]()
+    var arrayTaskName = [String]()
+    var arrayTaskID = [UUID]()
+    
+    init() {
+        appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
+        moc = appDelegate.persistentContainer.viewContext
+    }
     
     //insert new record in database
     func createNewHabit(name: String, category: String, cDate: Date, isReminder: Bool,reminder: Date, weekDays: String) {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let moc = appDelegate.persistentContainer.viewContext
         let habitEntity = NSEntityDescription.entity(forEntityName: "Habits", in: moc)!
         let habit = NSManagedObject(entity: habitEntity, insertInto: moc)
         
@@ -39,21 +54,48 @@ class DatabaseUtil {
         
     }
     
-    //fetch record from database
-    func fetchDataFromDatabase() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let moc = appDelegate.persistentContainer.viewContext
+    //fetch habit record from database
+    func fetchHabitsFromDatabase() -> Array<Any> {
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        //filter data with category habit
+        request.predicate = NSPredicate(format: "category = %@", "habit")
         do {
             let fetchData = try moc.fetch(request)
             for data in fetchData as! [NSManagedObject] {
-                print(data.value(forKey: "name") as! String)
-                print(data.value(forKey: "id") as! UUID)
+                arrayHabitName.append(data.value(forKey: "name") as! String)
+                arrayHabitID.append(data.value(forKey: "id") as! UUID)
             }
+            
+            arrayHabitToReturn.append(arrayHabitName)
+            arrayHabitToReturn.append(arrayHabitID)
         } catch {
             print("Error while fetching data..")
         }
+        
+        return arrayHabitToReturn
+    }
+    
+    //fetch task record from database
+    func fetchTasksFromDatabase() -> Array<Any> {
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        //filter data with category habit
+        request.predicate = NSPredicate(format: "category = %@", "task")
+        do {
+            let fetchData = try moc.fetch(request)
+            for data in fetchData as! [NSManagedObject] {
+                arrayTaskName.append(data.value(forKey: "name") as! String)
+                arrayTaskID.append(data.value(forKey: "id") as! UUID)
+            }
+            
+            arrayTaskToReturn.append(arrayTaskName)
+            arrayTaskToReturn.append(arrayTaskID)
+        } catch {
+            print("Error while fetching data..")
+        }
+        
+        return arrayTaskToReturn
     }
     
 }

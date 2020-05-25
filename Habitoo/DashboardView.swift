@@ -17,6 +17,9 @@ struct DashboardView: View {
     var currentWeekDays = [String]()
     @State var presentDateIndex = 0
     private var database = DatabaseUtil()
+    private var listOfHabits = [Any]()
+    private var listOfTasks = [Any]()
+    private var collectionUtil = CollectionUtil()
     
     init() {
         UITableView.appearance().separatorColor = .clear
@@ -24,7 +27,8 @@ struct DashboardView: View {
         UITableViewCell.appearance().backgroundColor = .clear
         presentDay = dateUtil.getCurrentDay()
         currentWeekDays = dateUtil.currentWeekDays()
-        database.fetchDataFromDatabase()
+        listOfHabits = database.fetchHabitsFromDatabase()
+        listOfTasks = database.fetchTasksFromDatabase()
     }
     
     var body: some View {
@@ -61,7 +65,7 @@ struct DashboardView: View {
                 //section for last week record
                 Section(header: Text("HABITS FOR TODAY").font(Font.subheadline.weight(.semibold))) {
                     VStack {
-                        ForEach(0..<2) { index in
+                        ForEach(0..<listOfHabits.count) { index in
                         VStack(alignment: .leading) {
                         Text("Meditate in the morning").padding()
                         .font(Font.headline.weight(.semibold))
@@ -73,6 +77,9 @@ struct DashboardView: View {
                                         .font(.title)
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .foregroundColor(.orange)
+                                        .onAppear() {
+                                            print("\(self.listOfHabits[0])")
+                                    }
                                 } else {
                                     Image(systemName: "circle")
                                     .font(.headline)
