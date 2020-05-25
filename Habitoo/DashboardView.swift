@@ -46,6 +46,7 @@ struct DashboardView: View {
     }
     
     var body: some View {
+        NavigationView {
         VStack {
             List {
                 HStack {
@@ -81,10 +82,11 @@ struct DashboardView: View {
                     VStack {
                         ForEach(0..<arrayHabitName.count) { index in
                         VStack(alignment: .leading) {
+                            NavigationLink(destination: HabitDetailView()) {
                             Text("\(self.arrayHabitName[index])").padding()
                         .font(Font.headline.weight(.semibold))
                             .foregroundColor(.orange)
-                                
+                            }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
                         HStack {
                             ForEach(0..<7) { index in
                                 if index == self.presentDateIndex {
@@ -117,14 +119,17 @@ struct DashboardView: View {
                                     .foregroundColor(Color.orange)
                                     .font(Font.title.weight(.medium))
                                     .padding(5)
+                                 NavigationLink(destination: HabitDetailView()) {
                                 Text("\(self.arrayTaskName[index])")
                                 .font(Font.headline.weight(.semibold))
-                                
+                                }
                             }
                         }
                     }
                 }
             }.listStyle(GroupedListStyle())
+            }.navigationBarTitle("")
+            .navigationBarHidden(true)
         }
     }
 }
