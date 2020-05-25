@@ -21,14 +21,28 @@ struct DashboardView: View {
     private var listOfTasks = [Any]()
     private var collectionUtil = CollectionUtil()
     
+    private var arrayHabitName = [String]()
+    private var arrayHabitID = [UUID]()
+    
+    private var arrayTaskName = [String]()
+    private var arrayTaskID = [UUID]()
+    
     init() {
         UITableView.appearance().separatorColor = .clear
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
         presentDay = dateUtil.getCurrentDay()
         currentWeekDays = dateUtil.currentWeekDays()
+        //fetch habits list from database
         listOfHabits = database.fetchHabitsFromDatabase()
+        //seprate habit name from array
+        arrayHabitName = listOfHabits[0] as! [String]
+        //sepeate habit id from array
+        arrayHabitID = listOfHabits[1] as! [UUID]
+        //fetch tasks list from database
         listOfTasks = database.fetchTasksFromDatabase()
+        arrayTaskName = listOfTasks[0] as! [String]
+        arrayTaskID = listOfTasks[1] as! [UUID]
     }
     
     var body: some View {
@@ -65,11 +79,12 @@ struct DashboardView: View {
                 //section for last week record
                 Section(header: Text("HABITS FOR TODAY").font(Font.subheadline.weight(.semibold))) {
                     VStack {
-                        ForEach(0..<listOfHabits.count) { index in
+                        ForEach(0..<arrayHabitName.count) { index in
                         VStack(alignment: .leading) {
-                        Text("Meditate in the morning").padding()
+                            Text("\(self.arrayHabitName[index])").padding()
                         .font(Font.headline.weight(.semibold))
                             .foregroundColor(.orange)
+                                
                         HStack {
                             ForEach(0..<7) { index in
                                 if index == self.presentDateIndex {
@@ -77,9 +92,6 @@ struct DashboardView: View {
                                         .font(.title)
                                         .frame(minWidth: 0, maxWidth: .infinity)
                                         .foregroundColor(.orange)
-                                        .onAppear() {
-                                            print("\(self.listOfHabits[0])")
-                                    }
                                 } else {
                                     Image(systemName: "circle")
                                     .font(.headline)
@@ -92,22 +104,22 @@ struct DashboardView: View {
                         .cornerRadius(10)
                     }
                     }
-                    
                     Text("You only 1 habit to do today!")
                         .foregroundColor(Color.gray).font(.subheadline)
                 
                 }
                 //section for task list
                 Section(header: Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))) {
-                    VStack {
-                        ForEach(0..<7) { index in
+                    VStack(alignment: .leading) {
+                        ForEach(0..<arrayTaskName.count) { index in
                             HStack {
                                 Image(systemName: "stop")
                                     .foregroundColor(Color.orange)
                                     .font(Font.title.weight(.medium))
                                     .padding(5)
-                                Text("Have a breakfast")
+                                Text("\(self.arrayTaskName[index])")
                                 .font(Font.headline.weight(.semibold))
+                                
                             }
                         }
                     }
