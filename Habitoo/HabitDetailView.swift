@@ -14,6 +14,8 @@ struct HabitDetailView: View {
     let rows = 5
     let columns = 7
     @State var isEditHabbitShown = false
+    @State var uuid: UUID
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         List {
@@ -22,6 +24,9 @@ struct HabitDetailView: View {
                 HStack {
                     Image(systemName: "chevron.left").foregroundColor(.orange)
                     .font(Font.title.weight(.semibold))
+                        .onTapGesture {
+                            self.presentationMode.wrappedValue.dismiss()
+                    }
                     Spacer()
                     Text("Meditate in the morning").foregroundColor(.gray)
                     .font(.headline)
@@ -92,8 +97,8 @@ struct HabitDetailView: View {
                 }
             }
         }.listStyle(GroupedListStyle())
-            .navigationBarTitle("")
             .navigationBarHidden(true)
+            .navigationBarTitle("")
             .accentColor(Color.orange)
     }
 }

@@ -79,10 +79,11 @@ struct DashboardView: View {
                 }
                 //section for last week record
                 Section(header: Text("HABITS FOR TODAY").font(Font.subheadline.weight(.semibold))) {
+                    
                     VStack {
                         ForEach(0..<arrayHabitName.count) { index in
                         VStack(alignment: .leading) {
-                            NavigationLink(destination: HabitDetailView()) {
+                            NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index])) {
                             Text("\(self.arrayHabitName[index])").padding()
                         .font(Font.headline.weight(.semibold))
                             .foregroundColor(.orange)
@@ -108,7 +109,7 @@ struct DashboardView: View {
                     }
                     Text("You only 1 habit to do today!")
                         .foregroundColor(Color.gray).font(.subheadline)
-                
+                    
                 }
                 //section for task list
                 Section(header: Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))) {
@@ -119,7 +120,7 @@ struct DashboardView: View {
                                     .foregroundColor(Color.orange)
                                     .font(Font.title.weight(.medium))
                                     .padding(5)
-                                 NavigationLink(destination: HabitDetailView()) {
+                                NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index])) {
                                 Text("\(self.arrayTaskName[index])")
                                 .font(Font.headline.weight(.semibold))
                                 }

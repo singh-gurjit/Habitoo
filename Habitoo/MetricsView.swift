@@ -13,6 +13,7 @@ struct MetricsView: View {
     
     @State var on = true
     var sampleData: [CGFloat] = [0,1]
+    var uuid = UUID()
     
     var body: some View {
         NavigationView {
@@ -24,7 +25,7 @@ struct MetricsView: View {
                 
                 HStack {
                     ForEach(0..<10) { index in
-                        NavigationLink(destination: HabitDetailView()) {
+                        NavigationLink(destination: HabitDetailView(uuid: self.uuid)) {
                             Text("Read..")
                             .padding(8)
                             .foregroundColor(Color.white)
