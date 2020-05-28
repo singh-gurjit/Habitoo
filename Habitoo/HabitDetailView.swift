@@ -30,13 +30,14 @@ struct HabitDetailView: View {
                     Spacer()
                     Text("Meditate in the morning").foregroundColor(.gray)
                     .font(.headline)
+                
                     Spacer()
                      Image(systemName: "pencil").foregroundColor(.orange)
                         .font(Font.title.weight(.semibold))
                         .onTapGesture {
                             self.isEditHabbitShown.toggle()
                     }.sheet(isPresented: self.$isEditHabbitShown) {
-                        EditHabitView()
+                        EditHabitView(uuid: self.uuid)
                     }
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
                 
@@ -97,8 +98,8 @@ struct HabitDetailView: View {
                 }
             }
         }.listStyle(GroupedListStyle())
-            .navigationBarHidden(true)
             .navigationBarTitle("")
+        .navigationBarHidden(true)
             .accentColor(Color.orange)
     }
 }

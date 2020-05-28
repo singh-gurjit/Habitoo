@@ -47,8 +47,7 @@ struct DashboardView: View {
     
     var body: some View {
         NavigationView {
-        VStack {
-            List {
+            VStack(alignment: .leading,spacing:10) {
                 HStack {
                     ForEach(0..<7) { index in
                         Spacer()
@@ -77,10 +76,10 @@ struct DashboardView: View {
                         Spacer()
                     }
                 }
-                //section for last week record
-                Section(header: Text("HABITS FOR TODAY").font(Font.subheadline.weight(.semibold))) {
                     
                     VStack {
+                        List {
+                        Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))
                         ForEach(0..<arrayHabitName.count) { index in
                         VStack(alignment: .leading) {
                             NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index])) {
@@ -106,29 +105,31 @@ struct DashboardView: View {
                         .foregroundColor(Color.black)
                         .cornerRadius(10)
                     }
+                            Text("You only 1 habit to do today!")
+                            .foregroundColor(Color.gray).font(.subheadline)
+                            
+                            
+                                Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))
+                                ForEach(0..<arrayTaskName.count) { index in
+                                    HStack {
+                                        Image(systemName: "stop")
+                                            .foregroundColor(Color.orange)
+                                            .font(Font.title.weight(.medium))
+                                            .padding(5)
+                                        NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index])) {
+                                        Text("\(self.arrayTaskName[index])")
+                                        .font(Font.headline.weight(.semibold))
+                                        }
+                                    }
+                                }
+                                
+                            
                     }
-                    Text("You only 1 habit to do today!")
-                        .foregroundColor(Color.gray).font(.subheadline)
+                    
+                    
                     
                 }
-                //section for task list
-                Section(header: Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))) {
-                    VStack(alignment: .leading) {
-                        ForEach(0..<arrayTaskName.count) { index in
-                            HStack {
-                                Image(systemName: "stop")
-                                    .foregroundColor(Color.orange)
-                                    .font(Font.title.weight(.medium))
-                                    .padding(5)
-                                NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index])) {
-                                Text("\(self.arrayTaskName[index])")
-                                .font(Font.headline.weight(.semibold))
-                                }
-                            }
-                        }
-                    }
-                }
-            }.listStyle(GroupedListStyle())
+            
             }.navigationBarTitle("")
             .navigationBarHidden(true)
         }

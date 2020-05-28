@@ -80,7 +80,7 @@ class DatabaseUtil {
     func fetchTasksFromDatabase() -> Array<Any> {
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
-        //filter data with category habit
+        //filter data with category task
         request.predicate = NSPredicate(format: "category = %@", "task")
         do {
             let fetchData = try moc.fetch(request)
@@ -98,4 +98,21 @@ class DatabaseUtil {
         return arrayTaskToReturn
     }
     
+    func deleteHabit(uuid: UUID) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        request.predicate = NSPredicate(format: "id = %@", "\(uuid)")
+        do {
+            let fetchData = try moc.fetch(request)
+            let dataToDelete = fetchData[0] as! NSManagedObject
+            moc.delete(dataToDelete)
+            do {
+                try moc.save()
+                print("deleted")
+            } catch {
+                print(error)
+            }
+        } catch {
+            print("Error while deleting data..")
+        }
+    }
 }
