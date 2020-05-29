@@ -22,6 +22,7 @@ struct NewHabitView: View{
     private var database = DatabaseUtil()
     private var date = Date()
     private var collectionUtil = CollectionUtil()
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack(alignment: .leading,spacing: 15) {
@@ -158,6 +159,7 @@ struct NewHabitView: View{
                                     self.database.createNewHabit(name: self.habitName, category: self.currrentType, cDate: self.date, isReminder: self.isReminderSet, reminder: self.remAlarm, weekDays: self.collectionUtil.arrayToString(array: self.selectedWeekDays))
                                     self.isNameEmpty.toggle()
                                     self.habitName = ""
+                                    self.presentationMode.wrappedValue.dismiss()
                                 } else {
                                     self.isNameEmpty.toggle()
                                 }

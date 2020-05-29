@@ -26,6 +26,9 @@ class DatabaseUtil {
     var arrayTaskName = [String]()
     var arrayTaskID = [UUID]()
     
+    //property to return record by id
+    var arrayResultByID = [Any]()
+    
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
         moc = appDelegate.persistentContainer.viewContext
@@ -115,4 +118,29 @@ class DatabaseUtil {
             print("Error while deleting data..")
         }
     }
+    
+    //fetch habit record from database
+    func fetchRecordByID(uuid: UUID) -> Array<Any> {
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        request.fetchLimit = 1
+        //filter data with category habit
+        request.predicate = NSPredicate(format: "id = %@", "\(uuid)")
+        do {
+            let fetchData = try moc.fetch(request)
+            for data in fetchData as! [NSManagedObject] {
+                arrayResultByID.append(data.value(forKey: "name") as! String)
+                arrayResultByID.append(data.value(forKey: "category") as! String)
+                arrayResultByID.append(data.value(forKey: "isReminder") as! Bool)
+                arrayResultByID.append(data.value(forKey: "reminderTime") as! Date)
+                arrayResultByID.append(data.value(forKey: "weekDays") as! String)
+            }
+            
+        } catch {
+            print("Error while fetching data..")
+        }
+        
+        return arrayResultByID
+    }
+    
 }

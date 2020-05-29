@@ -18,4 +18,9 @@ class CollectionUtil {
         return convertArrayToString
     }
     
+    func stringToIntArray(string: String) -> [Int] {
+        let array = string.components(separatedBy: ",")
+        let intArray = array.map { Int($0)!}
+        return intArray
+    }
 }
