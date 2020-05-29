@@ -134,6 +134,7 @@ class DatabaseUtil {
                 arrayResultByID.append(data.value(forKey: "isReminder") as! Bool)
                 arrayResultByID.append(data.value(forKey: "reminderTime") as! Date)
                 arrayResultByID.append(data.value(forKey: "weekDays") as! String)
+                arrayResultByID.append(data.value(forKey: "id") as! UUID)
             }
             
         } catch {
@@ -141,6 +142,28 @@ class DatabaseUtil {
         }
         
         return arrayResultByID
+    }
+    
+    func updateHabitRecord(uuid: UUID, name: String, category: String, isReminder: Bool, remTime: Date, weekDays: String) {
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Habits")
+        //update record where id is uuid
+        request.predicate = NSPredicate(format: "id = %@", "\(uuid)")
+        do {
+            let fetchData = try moc.fetch(request)
+            let objectToUpdate = fetchData[0] as! NSManagedObject
+            objectToUpdate.setValue(name, forKey: "name")
+            objectToUpdate.setValue(category, forKey: "category")
+            objectToUpdate.setValue(isReminder, forKey: "isReminder")
+            objectToUpdate.setValue(remTime, forKey: "reminderTime")
+            objectToUpdate.setValue(weekDays, forKey: "weekDays")
+            do {
+                try moc.save()
+            } catch {
+              print(error)
+            }
+        } catch {
+            print("Error while updating data..")
+        }
     }
     
 }
