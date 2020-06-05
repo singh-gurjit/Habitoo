@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="HabitCompleted" representedClassName="HabitCompleted" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="habitID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="habitName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
     <entity name="Habits" representedClassName="Habits" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -9,7 +15,14 @@
         <attribute name="reminderTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="weekDays" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="TaskCompleted" representedClassName="TaskCompleted" syncable="YES" codeGenerationType="class">
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="taskID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
     <elements>
+        <element name="HabitCompleted" positionX="-63" positionY="36" width="128" height="103"/>
         <element name="Habits" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="TaskCompleted" positionX="-54" positionY="45" width="128" height="88"/>
     </elements>
 </model>

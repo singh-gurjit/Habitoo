@@ -73,7 +73,6 @@ struct EditHabitView: View {
                 TextField("Name", text: $habitName).font(.headline)
                     .onAppear() {
                         self.uuid = self.fetchRecordByID[5] as! UUID
-                        print("edit - \(String(describing: self.uuid))")
                         self.habitName = self.fetchRecordByID[0] as! String
                         self.isReminderSet = self.fetchRecordByID[2] as! Bool
                         if self.isReminderSet {

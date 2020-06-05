@@ -11,6 +11,7 @@ import SwiftUI
 
 class CollectionUtil {
     
+    //change array to string
     func arrayToString (array: [Int]) -> String {
         let array = array
         let arrayToStringArray = array.map { String($0) }
@@ -18,9 +19,19 @@ class CollectionUtil {
         return convertArrayToString
     }
     
+    //change string from integer array
     func stringToIntArray(string: String) -> [Int] {
         let array = string.components(separatedBy: ",")
         let intArray = array.map { Int($0)!}
         return intArray
+    }
+    
+    //change date format
+    func dateFormat(date: Date) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d-M-y"
+        let stringDate = formatter.string(from: date)
+        let date = formatter.date(from: stringDate)
+        return date!
     }
 }

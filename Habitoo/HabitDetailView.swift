@@ -30,9 +30,6 @@ struct HabitDetailView: View {
                     Spacer()
                     Text("Meditate in the morning").foregroundColor(.gray)
                     .font(.headline)
-                        .onAppear() {
-                            print("detail - \(self.uuid)")
-                    }
                 
                     Spacer()
                      Image(systemName: "pencil").foregroundColor(.orange)
