@@ -29,7 +29,7 @@ struct DashboardView: View {
     private var arrayTaskName = [String]()
     private var arrayTaskID = [UUID]()
     
-    private var completeDatabaseUtil = CompleteDatabaseUtil()
+    @ObservedObject var completeDatabaseUtil = CompleteDatabaseUtil()
     
     //tasks completed record
     private var listOfTasksComplete = [Any]()
@@ -40,6 +40,8 @@ struct DashboardView: View {
     
     @State var completedTaskFound = false
     @State var isHabitCompleteBtn = false
+    @State var listOfHabitsComplete = [Any]()
+    @State var arrayHabitUUIDComplete = [UUID]()
     
     init() {
         UITableView.appearance().separatorColor = .clear
@@ -100,7 +102,13 @@ struct DashboardView: View {
                 
                 VStack {
                     List {
-                        Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))
+                        Text("HABITS FOR TODAY").font(Font.subheadline.weight(.semibold))
+                            .onAppear() {
+                                //fetch record from database
+                                self.listOfHabitsComplete = self.completeDatabaseUtil.fetchCompletedHabits()
+                                self.arrayHabitUUIDComplete = self.listOfHabitsComplete[1] as! [UUID]
+                                print("\(self.listOfHabitsComplete)")
+                        }
                         ForEach(0..<arrayHabitName.count, id: \.self) { index in
                             VStack(alignment: .leading) {
                                 NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index])) {
@@ -109,24 +117,34 @@ struct DashboardView: View {
                                         .foregroundColor(.orange)
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
                                 HStack {
-                                    ForEach(0..<7) { index in
-                                        if index == self.presentDateIndex {
+                                    ForEach(0..<7) { data in
+                                        if data == self.presentDateIndex {
                                             if self.isHabitCompleteBtn {
+                                                
                                                 Image(systemName: "checkmark.circle")
                                                     .font(.title)
                                                     .frame(minWidth: 0, maxWidth: .infinity)
                                                     .foregroundColor(.orange)
                                                     .onTapGesture {
+                                                        //change button state
                                                         self.isHabitCompleteBtn.toggle()
+                                                        //delete record from database
                                                         self.completeDatabaseUtil.deleteHabitCompleted(id: self.arrayHabitID[index])
+                                                }.onAppear() {
+                                                    
                                                 }
                                             } else {
                                                 Image(systemName: "circle")
                                                     .font(.title)
                                                     .frame(minWidth: 0, maxWidth: .infinity)
                                                     .foregroundColor(.orange)
+                                                    .onAppear() {
+                                                        
+                                                    }
                                                     .onTapGesture {
+                                                        //change button state
                                                         self.isHabitCompleteBtn.toggle()
+                                                        //save data to database
                                                         self.completeDatabaseUtil.insertCompletedHabit(habitName: self.arrayHabitName[index], uuid: self.arrayHabitID[index], cDate: self.collectionUtil.dateFormat(date: self.date))
                                                 }}
                                         } else {

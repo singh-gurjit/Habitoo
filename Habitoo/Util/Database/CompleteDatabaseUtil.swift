@@ -19,6 +19,12 @@ class CompleteDatabaseUtil: ObservableObject {
     @Published var arrayTaskDateCompleted = [Any]()
     @Published var arrayTaskCompletedToReturn = [[Any]]()
     
+    //complete habits properties
+    @Published var arrayHabitIDCompleted = [Any]()
+    @Published var arrayHabitUUIDCompleted = [Any]()
+    @Published var arrayHabitDateCompleted = [Any]()
+    @Published var arrayHabitCompletedToReturn = [[Any]]()
+    
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
         moc = appDelegate.persistentContainer.viewContext
@@ -126,7 +132,26 @@ class CompleteDatabaseUtil: ObservableObject {
         return arrayTaskCompletedToReturn
     }
     
-    func filterCompletedData() {
+    //fetch task record from database
+    func fetchCompletedHabits() -> Array<Any> {
         
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        
+        do {
+            let fetchData = try moc.fetch(request)
+            for data in fetchData as! [NSManagedObject] {
+                arrayHabitIDCompleted.append(data.value(forKey: "id") as! UUID)
+                arrayHabitUUIDCompleted.append(data.value(forKey: "habitID") as! UUID)
+                arrayHabitDateCompleted.append(data.value(forKey: "createdDate") as! Date)
+            }
+            
+            arrayHabitCompletedToReturn.append(arrayHabitIDCompleted)
+            arrayHabitCompletedToReturn.append(arrayHabitUUIDCompleted)
+            arrayHabitCompletedToReturn.append(arrayHabitDateCompleted)
+        } catch {
+            print("Error while fetching data..")
+        }
+        return arrayHabitCompletedToReturn
     }
+    
 }
