@@ -29,6 +29,7 @@
 		E2C3837A2478176200444F31 /* CollectionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C383792478176200444F31 /* CollectionUtil.swift */; };
 		E2E56063247E69C40098F6BD /* EditHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E56062247E69C40098F6BD /* EditHabitView.swift */; };
 		E2F265FF2481D295009FB283 /* CompleteDatabaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F265FE2481D295009FB283 /* CompleteDatabaseUtil.swift */; };
+		E2FFFCAC248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFFCAB248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		E2C383792478176200444F31 /* CollectionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionUtil.swift; sourceTree = "<group>"; };
 		E2E56062247E69C40098F6BD /* EditHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitView.swift; sourceTree = "<group>"; };
 		E2F265FE2481D295009FB283 /* CompleteDatabaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDatabaseUtil.swift; sourceTree = "<group>"; };
+		E2FFFCAB248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCompleteCheckBoxView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 				E2260688246D5702007948DC /* GridCalendar.swift */,
 				E24948D1246CAEF90035140D /* LineGraph.swift */,
 				E2B3BDED2482610F00357106 /* TasksCheckBoxView.swift */,
+				E2FFFCAB248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2B9FA8F247D14EB0098BA22 /* DetailBackNavigation.swift in Sources */,
+				E2FFFCAC248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift in Sources */,
 				E24948B6246C707D0035140D /* Habitoo.xcdatamodeld in Sources */,
 				E24948CC246C726A0035140D /* MetricsView.swift in Sources */,
 				E24948CA246C72590035140D /* DashboardView.swift in Sources */,

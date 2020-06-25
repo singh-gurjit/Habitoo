@@ -70,7 +70,7 @@ struct DashboardView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading,spacing:10) {
+           VStack(alignment: .leading,spacing:10) {
                 HStack {
                     ForEach(0..<7) { index in
                         Spacer()
@@ -107,7 +107,8 @@ struct DashboardView: View {
                                 //fetch record from database
                                 self.listOfHabitsComplete = self.completeDatabaseUtil.fetchCompletedHabits()
                                 self.arrayHabitUUIDComplete = self.listOfHabitsComplete[1] as! [UUID]
-                                print("\(self.listOfHabitsComplete)")
+                                //print("\(self.listOfHabitsComplete)")
+                                
                         }
                         ForEach(0..<arrayHabitName.count, id: \.self) { index in
                             VStack(alignment: .leading) {
@@ -117,40 +118,16 @@ struct DashboardView: View {
                                         .foregroundColor(.orange)
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
                                 HStack {
+                                    
                                     ForEach(0..<7) { data in
+                                        HStack {
                                         if data == self.presentDateIndex {
-                                            if self.isHabitCompleteBtn {
-                                                
-                                                Image(systemName: "checkmark.circle")
-                                                    .font(.title)
-                                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                                    .foregroundColor(.orange)
-                                                    .onTapGesture {
-                                                        //change button state
-                                                        self.isHabitCompleteBtn.toggle()
-                                                        //delete record from database
-                                                        self.completeDatabaseUtil.deleteHabitCompleted(id: self.arrayHabitID[index])
-                                                }.onAppear() {
-                                                    
-                                                }
-                                            } else {
-                                                Image(systemName: "circle")
-                                                    .font(.title)
-                                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                                    .foregroundColor(.orange)
-                                                    .onAppear() {
-                                                        
-                                                    }
-                                                    .onTapGesture {
-                                                        //change button state
-                                                        self.isHabitCompleteBtn.toggle()
-                                                        //save data to database
-                                                        self.completeDatabaseUtil.insertCompletedHabit(habitName: self.arrayHabitName[index], uuid: self.arrayHabitID[index], cDate: self.collectionUtil.dateFormat(date: self.date))
-                                                }}
+                                            HabitCompleteCheckBoxView(habitID: self.arrayHabitID[index],habitName: self.arrayHabitName[index])
                                         } else {
                                             Image(systemName: "circle")
                                                 .font(.headline)
                                                 .frame(minWidth: 0, maxWidth: .infinity)
+                                        }
                                         }
                                     }
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
