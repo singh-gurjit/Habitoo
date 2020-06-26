@@ -26,7 +26,9 @@ class CompleteDatabaseUtil: ObservableObject {
     @Published var arrayHabitCompletedToReturn = [[Any]]()
     @Published var isHabitComplete = false
     
-    @Published var fetchResultForToday = [UUID]()
+    @Published var fetchResultForTodayID = [UUID]()
+    @Published var fetchResultForTodayHabitID = [UUID]()
+    @Published var fetchResultForToday = [[UUID]]()
     var date = Date()
     var collectionUtil = CollectionUtil()
     
@@ -186,7 +188,7 @@ class CompleteDatabaseUtil: ObservableObject {
            //return isHabitComplete
        }
     
-    func fetchTodaysHabits(cDate: Date) -> Array<UUID> {
+    func fetchTodaysHabits(cDate: Date) -> Array<Any> {
     
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
         request.predicate = NSPredicate(format: "createdDate = %@", cDate as NSDate)
@@ -195,8 +197,11 @@ class CompleteDatabaseUtil: ObservableObject {
             let fetchData = try moc.fetch(request)
             if fetchData.count > 0 {
                 for data in fetchData as! [NSManagedObject] {
-                    fetchResultForToday.append(data.value(forKey: "habitID") as! UUID)
+                    fetchResultForTodayHabitID.append(data.value(forKey: "habitID") as! UUID)
+                    fetchResultForTodayID.append(data.value(forKey: "id") as! UUID)
                 }
+                fetchResultForToday.append(fetchResultForTodayHabitID)
+                fetchResultForToday.append(fetchResultForTodayID)
             } else {
                 print("No record found")
             }
@@ -207,24 +212,24 @@ class CompleteDatabaseUtil: ObservableObject {
         return fetchResultForToday
     }
     
-    func fetchTodaysHabitsAll(cDate: Date) -> Array<Any> {
-    
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
-        request.predicate = NSPredicate(format: "createdDate = %@", cDate as NSDate)
-
-        do {
-            let fetchData = try moc.fetch(request)
-            if fetchData.count > 0 {
-                for data in fetchData as! [NSManagedObject] {
-                    fetchResultForToday.append(data.value(forKey: "habitID") as! UUID)
-                }
-            } else {
-                print("No record found")
-            }
-        } catch {
-            print("Error while fetching data..")
-        }
-        //print("\(fetchResultForToday)")
-        return fetchResultForToday
-    }
+//    func fetchTodaysHabitsAll(cDate: Date) -> Array<Any> {
+//
+//        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+//        request.predicate = NSPredicate(format: "createdDate = %@", cDate as NSDate)
+//
+//        do {
+//            let fetchData = try moc.fetch(request)
+//            if fetchData.count > 0 {
+//                for data in fetchData as! [NSManagedObject] {
+//                    fetchResultForToday.append(data.value(forKey: "habitID") as! UUID)
+//                }
+//            } else {
+//                print("No record found")
+//            }
+//        } catch {
+//            print("Error while fetching data..")
+//        }
+//        //print("\(fetchResultForToday)")
+//        return fetchResultForToday
+//    }
 }
