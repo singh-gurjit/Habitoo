@@ -13,6 +13,11 @@ class DateUtil {
     
     var date = Date()
     let formatter = DateFormatter()
+    let formatterCurrentMonth = DateFormatter()
+    let formatterCurrentYear = DateFormatter()
+    var currentMonth = ""
+    var currentYear = ""
+    var arrayToReturn = [String]()
     
     //returns current day
      func getCurrentDay() -> String {
@@ -32,5 +37,23 @@ class DateUtil {
         //print(days)
         let dateObjects = days.compactMap { formatter.string(from: $0) }
         return dateObjects
+    }
+    
+    func filterDateFromCurrentMonth(array: [Date]) -> [String] {
+        //get current month and year
+        formatterCurrentMonth.dateFormat = "MM"
+        currentMonth = formatterCurrentMonth.string(from: date)
+        formatterCurrentYear.dateFormat = "yyyy"
+        currentYear = formatterCurrentYear.string(from: date)
+        
+        formatter.dateFormat = "yyyy-MM-dd"
+        let dateObjects = array.map{ formatter.string(from: $0) }
+        for object in dateObjects {
+            let splitArray = object.components(separatedBy: "-")
+            if splitArray[0] == currentYear && splitArray[1] == currentMonth {
+                arrayToReturn.append("\(splitArray[2])")
+            }
+        }
+        return arrayToReturn
     }
 }

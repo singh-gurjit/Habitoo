@@ -28,7 +28,9 @@ struct GridCalender: View {
     var date = Date()
     var habitID: UUID = UUID()
     var databaseUtil = CompleteDatabaseUtil()
-    @State var fetchResultFromDatabase = [Any]()
+    @State var fetchResultFromDatabase = [Date]()
+    @State var fetchResultFromDatabaseFiltered = [String]()
+    var dateUtil = DateUtil()
     
     init(id: UUID) {
         self.habitID = id
@@ -44,16 +46,18 @@ struct GridCalender: View {
                     ForEach(0 ..< self.columns, id: \.self) { column in
                         //self.content(row, column)
                         VStack {
-                            Image(systemName: "\(self.configureCell(date: self.items[row][column])).circle").font(.largeTitle)
+                            Image(systemName: "\(self.configureCell(date: self.items[row][column]))").font(.largeTitle)
                             .foregroundColor(.gray)
-                        }.onAppear(){
-                            self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.habitID)
-                            print("\(self.fetchResultFromDatabase)")
                         }
                     }
                 }.padding(10)
             }
         }.frame(maxWidth: .infinity)
+        .onAppear(){
+            self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.habitID) as! [Date]
+            self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
+            print("filtered data - \(self.fetchResultFromDatabaseFiltered)")
+        }
     }
     
     var cell:(Int, Int) -> String = { row, col in
@@ -109,6 +113,13 @@ struct GridCalender: View {
             let cal = Calendar.current
             let components = (cal as NSCalendar).components([.day], from: date)
             let day = components.day!
-            return String(day)
+            let stringCombine: String
+            if fetchResultFromDatabaseFiltered.contains(String(day)) {
+               stringCombine = String(day)+".circle.fill"
+            } else {
+                stringCombine = String(day)+".circle"
+            }
+            
+            return stringCombine
         }
 }

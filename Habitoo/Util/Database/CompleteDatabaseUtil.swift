@@ -33,7 +33,7 @@ class CompleteDatabaseUtil: ObservableObject {
     var collectionUtil = CollectionUtil()
     
     @Published var fetchHabitRecordForThisMonth = [Any]()
-    
+    @Published var fetchHabitCompletedDateForThisMonth = [Date]()
     
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -242,18 +242,15 @@ class CompleteDatabaseUtil: ObservableObject {
             let fetchData = try moc.fetch(request)
             if fetchData.count > 0 {
                 for data in fetchData as! [NSManagedObject] {
-                    fetchResultForTodayHabitID.append(data.value(forKey: "habitID") as! UUID)
-                    fetchResultForTodayID.append(data.value(forKey: "id") as! UUID)
+                    fetchHabitCompletedDateForThisMonth.append(data.value(forKey: "createdDate") as! Date)
                 }
-                fetchResultForToday.append(fetchResultForTodayHabitID)
-                fetchResultForToday.append(fetchResultForTodayID)
             } else {
-                //print("No record found")
+                print("No record found")
             }
         } catch {
             print("Error while fetching data..")
         }
-        return fetchHabitRecordForThisMonth
+        return fetchHabitCompletedDateForThisMonth
     }
     
 }
