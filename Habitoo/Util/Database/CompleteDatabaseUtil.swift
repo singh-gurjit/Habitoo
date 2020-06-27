@@ -32,7 +32,7 @@ class CompleteDatabaseUtil: ObservableObject {
     var date = Date()
     var collectionUtil = CollectionUtil()
     
-    //fetch record for today's habits
+    @Published var fetchHabitRecordForThisMonth = [Any]()
     
     
     init() {
@@ -54,7 +54,7 @@ class CompleteDatabaseUtil: ObservableObject {
         
         do {
             try moc.save()
-            print("Saved..")
+            //print("Saved..")
         } catch let error as NSError {
             print("Error while inserting.. \(error.userInfo)")
         }
@@ -74,7 +74,7 @@ class CompleteDatabaseUtil: ObservableObject {
         
         do {
             try moc.save()
-            print("Saved..")
+            //print("Saved..")
         } catch let error as NSError {
             print("Error while inserting.. \(error.userInfo)")
         }
@@ -91,9 +91,9 @@ class CompleteDatabaseUtil: ObservableObject {
             moc.delete(dataToDelete)
             do {
                 try moc.save()
-                print("deleted")
+                //print("deleted")
             } catch {
-                print(error)
+                //print(error)
             }
         } catch {
             print("Error while deleting data..")
@@ -110,9 +110,9 @@ class CompleteDatabaseUtil: ObservableObject {
             moc.delete(dataToDelete)
             do {
                 try moc.save()
-                print("deleted")
+                //print("deleted")
             } catch {
-                print(error)
+                //print(error)
             }
         } catch {
             print("Error while deleting data..")
@@ -177,10 +177,10 @@ class CompleteDatabaseUtil: ObservableObject {
                
             if fetchData.count > 0 {
                 isHabitComplete = true
-                print("found")
+                //print("found")
             } else {
                 isHabitComplete = false
-                print("not found")
+                //print("not found")
             }
            } catch {
                print("Error while fetching data..")
@@ -203,7 +203,7 @@ class CompleteDatabaseUtil: ObservableObject {
                 fetchResultForToday.append(fetchResultForTodayHabitID)
                 fetchResultForToday.append(fetchResultForTodayID)
             } else {
-                print("No record found")
+                //print("No record found")
             }
         } catch {
             print("Error while fetching data..")
@@ -232,4 +232,28 @@ class CompleteDatabaseUtil: ObservableObject {
 //        //print("\(fetchResultForToday)")
 //        return fetchResultForToday
 //    }
+    
+    //fetch particular habit record for this month
+    func habitRecordForThisMonth(hID: UUID) -> Array<Any> {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
+
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for data in fetchData as! [NSManagedObject] {
+                    fetchResultForTodayHabitID.append(data.value(forKey: "habitID") as! UUID)
+                    fetchResultForTodayID.append(data.value(forKey: "id") as! UUID)
+                }
+                fetchResultForToday.append(fetchResultForTodayHabitID)
+                fetchResultForToday.append(fetchResultForTodayID)
+            } else {
+                //print("No record found")
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        return fetchHabitRecordForThisMonth
+    }
+    
 }

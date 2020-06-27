@@ -16,6 +16,9 @@ struct HabitDetailView: View {
     @State var isEditHabbitShown = false
     @State var uuid: UUID
     @Environment(\.presentationMode) var presentationMode
+    var weekDays = ["S","M","T","W","T","F","S"]
+    var calendarUtil = CalenderUtil()
+    var items = [[Date]]()
     
     var body: some View {
         List {
@@ -60,22 +63,12 @@ struct HabitDetailView: View {
                 VStack(alignment: .center) {
                     HStack(alignment: .center, spacing: 15) {
                         ForEach(0..<7, id: \.self) { index in
-                            Text("S").frame(minWidth: 0, maxWidth: .infinity)
+                            Text("\(self.weekDays[index])").frame(minWidth: 0, maxWidth: .infinity)
                                 .font(.headline)
                         }
                     }
-                    ForEach(0 ..< rows, id: \.self) { row in
-                        HStack(alignment: .center, spacing: 15) {
-                            ForEach(0 ..< self.columns, id: \.self) { column in
-                                //self.content(row, column)
-                                VStack {
-                                    Image(systemName: "1.circle").font(.title)
-                                        .frame(minWidth: 0, maxWidth: .infinity)
-                                        .foregroundColor(.gray)
-                                }
-                            }
-                        }.padding(10)
-                    }
+                    //display calender monthly
+                    GridCalender(id: uuid)
                 }.padding()
                     .overlay(
                         RoundedRectangle(cornerRadius: 16)

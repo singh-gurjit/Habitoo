@@ -57,14 +57,14 @@ struct HabitCompleteCheckBoxView: View {
                 self.fetchResultHabitId = self.fetchResult[0] as! [UUID]
                 self.fetchResultId = self.fetchResult[1] as! [UUID]
             }
-            print("Result - \(self.fetchResult), \(self.habitID), Result id- \(self.fetchResultHabitId )")
+            //print("Result - \(self.fetchResult), \(self.habitID), Result id- \(self.fetchResultHabitId )")
             
             //toggle completed habit
             if self.fetchResultHabitId.contains(self.habitID) {
                 self.isHabitComplete = true
                 self.completedHabitIndex = self.fetchResultHabitId.firstIndex(of: self.habitID)!
             } else {
-                print("false")
+                //print("false")
                 self.isHabitComplete = false
             }
         }

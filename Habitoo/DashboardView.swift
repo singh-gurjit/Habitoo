@@ -159,7 +159,7 @@ struct DashboardView: View {
                     
                     
                 }
-                
+                Spacer()
             }.navigationBarTitle("")
                 .navigationBarHidden(true)
         }
