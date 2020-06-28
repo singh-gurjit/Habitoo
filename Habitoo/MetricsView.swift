@@ -25,7 +25,7 @@ struct MetricsView: View {
                 
                 HStack {
                     ForEach(0..<10) { index in
-                        NavigationLink(destination: HabitDetailView(uuid: self.uuid)) {
+                        NavigationLink(destination: HabitDetailView(uuid: self.uuid, category: "habit")) {
                             Text("Read..")
                             .padding(8)
                             .foregroundColor(Color.white)

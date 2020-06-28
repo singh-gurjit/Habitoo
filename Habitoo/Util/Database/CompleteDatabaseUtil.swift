@@ -34,6 +34,7 @@ class CompleteDatabaseUtil: ObservableObject {
     
     @Published var fetchHabitRecordForThisMonth = [Any]()
     @Published var fetchHabitCompletedDateForThisMonth = [Date]()
+    @Published var fetchTaskCompletedDateForThisMonth = [Date]()
     
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -251,6 +252,26 @@ class CompleteDatabaseUtil: ObservableObject {
             print("Error while fetching data..")
         }
         return fetchHabitCompletedDateForThisMonth
+    }
+    
+    //fetch particular task record for this month
+    func taskRecordForThisMonth(tID: UUID) -> Array<Any> {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
+        request.predicate = NSPredicate(format: "taskID = %@", "\(tID)")
+
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for data in fetchData as! [NSManagedObject] {
+                    fetchTaskCompletedDateForThisMonth.append(data.value(forKey: "createdDate") as! Date)
+                }
+            } else {
+                print("No record found")
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        return fetchTaskCompletedDateForThisMonth
     }
     
 }

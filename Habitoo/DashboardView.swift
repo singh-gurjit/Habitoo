@@ -112,7 +112,7 @@ struct DashboardView: View {
                         }
                         ForEach(0..<arrayHabitName.count, id: \.self) { index in
                             VStack(alignment: .leading) {
-                                NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index])) {
+                                NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index],category: "habit")) {
                                     Text("\(self.arrayHabitName[index])").padding()
                                         .font(Font.headline.weight(.semibold))
                                         .foregroundColor(.orange)
@@ -144,7 +144,7 @@ struct DashboardView: View {
                             HStack {
                                 Text("\(self.arrayTaskName[index])")
                                     .font(Font.headline.weight(.semibold))
-                                NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index])) {
+                                NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
                                     EmptyView()
                                 }.buttonStyle(PlainButtonStyle())
                                 Spacer()

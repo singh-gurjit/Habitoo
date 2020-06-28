@@ -19,6 +19,8 @@ struct HabitDetailView: View {
     var weekDays = ["S","M","T","W","T","F","S"]
     var calendarUtil = CalenderUtil()
     var items = [[Date]]()
+    @State var category: String
+    @State var currentViewType = "month"
     
     var body: some View {
         List {
@@ -26,16 +28,16 @@ struct HabitDetailView: View {
                 
                 HStack {
                     Image(systemName: "chevron.left").foregroundColor(.orange)
-                    .font(Font.title.weight(.semibold))
+                        .font(Font.title.weight(.semibold))
                         .onTapGesture {
                             self.presentationMode.wrappedValue.dismiss()
                     }
                     Spacer()
                     Text("Meditate in the morning").foregroundColor(.gray)
-                    .font(.headline)
-                
+                        .font(.headline)
+                    
                     Spacer()
-                     Image(systemName: "pencil").foregroundColor(.orange)
+                    Image(systemName: "pencil").foregroundColor(.orange)
                         .font(Font.title.weight(.semibold))
                         .onTapGesture {
                             self.isEditHabbitShown.toggle()
@@ -48,51 +50,127 @@ struct HabitDetailView: View {
                     .font(.headline)
                 Divider()
                 HStack {
-                    Text("Day").foregroundColor(.orange)
                     Spacer()
-                    Text("Week").foregroundColor(.orange)
+                    if currentViewType == "day" {
+                        Text("Day").foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.orange)
+                            .cornerRadius(10)
+                            .onTapGesture {
+                                self.currentViewType = "day"
+                        }
+                        Spacer()
+                        Text("Week").foregroundColor(.orange)
+                            .onTapGesture {
+                                self.currentViewType = "week"
+                        }
+                        Spacer()
+                        Text("Month").foregroundColor(.orange)
+                            .onTapGesture {
+                                self.currentViewType = "month"
+                        }
+                    } else if currentViewType == "week" {
+                        Text("Day").foregroundColor(.orange)
+                            .onTapGesture {
+                                self.currentViewType = "day"
+                        }
+                        Spacer()
+                        Text("Week").foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.orange)
+                            .cornerRadius(10)
+                            .onTapGesture {
+                                self.currentViewType = "week"
+                        }
+                        Spacer()
+                        Text("Month").foregroundColor(.orange)
+                            .onTapGesture {
+                                self.currentViewType = "month"
+                        }
+                    } else {
+                        Text("Day").foregroundColor(.orange)
+                            .onTapGesture {
+                                self.currentViewType = "day"
+                        }
+                        Spacer()
+                        Text("Week").foregroundColor(.orange)
+                            .onTapGesture {
+                                self.currentViewType = "week"
+                        }
+                        Spacer()
+                        Text("Month").foregroundColor(.white)
+                            .padding(8)
+                            .background(Color.orange)
+                            .cornerRadius(10)
+                            .onTapGesture {
+                                self.currentViewType = "month"
+                        }
+                    }
+                    
                     Spacer()
-                    Text("Month").foregroundColor(.white)
-                        .padding(8)
-                        .background(Color.orange)
-                        .cornerRadius(10)
-                    Spacer()
-                    Text("Year").foregroundColor(.orange)
+                    //Text("Year").foregroundColor(.orange)
                 }.padding()
                 
                 VStack(alignment: .center) {
-                    HStack(alignment: .center, spacing: 15) {
-                        ForEach(0..<7, id: \.self) { index in
-                            Text("\(self.weekDays[index])").frame(minWidth: 0, maxWidth: .infinity)
-                                .font(.headline)
+                    
+                    //display calender monthly
+                    if currentViewType == "month" {
+                        HStack(alignment: .center, spacing: 15) {
+                            ForEach(0..<7, id: \.self) { index in
+                                Text("\(self.weekDays[index])").frame(minWidth: 0, maxWidth: .infinity)
+                                    .font(.headline)
+                            }
+                        }
+                        //check if category is habit or task
+                        if category == "habit" {
+                            GridCalender(id: uuid)
+                        } else {
+                            GridCalendarTask(id: uuid)
+                        }
+                        //display weekly calendar
+                    } else if currentViewType == "week" {
+                        HStack(alignment: .center, spacing: 15) {
+                            ForEach(0..<7, id: \.self) { index in
+                                Text("\(self.weekDays[index])").frame(minWidth: 0, maxWidth: .infinity)
+                                    .font(.headline)
+                            }
+                        }
+                        if category == "habit" {
+                            WeeklyCalendarHabit(id: uuid)
+                        } else {
+                            WeeklyCalendarTask(id: uuid)
+                        }
+                    } else {
+                        if category == "habit" {
+                            DayCalendarHabit(id: uuid)
+                        } else {
+                            DayCalendarTask(id:uuid)
                         }
                     }
-                    //display calender monthly
-                    GridCalender(id: uuid)
-                }.padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.gray, lineWidth: 2)
-                            .opacity(0.1)
-                )
+            }.padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.gray, lineWidth: 2)
+                        .opacity(0.1)
+            )
+            
+            VStack(spacing: 10) {
                 
-                VStack(spacing: 10) {
-                    
-                    ForEach(0..<7, id: \.self) { index in
-                        VStack(alignment: .leading) {
-                            Text("November, 20 - 23").padding()
-                                .font(Font.headline.weight(.semibold))
-                                .foregroundColor(.orange)
-                            Text("You Have new record! As many as 4 days of stable training").padding()
-                                .font(Font.headline.weight(.medium))
-                                .foregroundColor(.gray)
-                        }
+                ForEach(0..<7, id: \.self) { index in
+                    VStack(alignment: .leading) {
+                        Text("November, 20 - 23").padding()
+                            .font(Font.headline.weight(.semibold))
+                            .foregroundColor(.orange)
+                        Text("You Have new record! As many as 4 days of stable training").padding()
+                            .font(Font.headline.weight(.medium))
+                            .foregroundColor(.gray)
                     }
                 }
             }
-        }.listStyle(GroupedListStyle())
-            .navigationBarTitle("")
-        .navigationBarHidden(true)
-            .accentColor(Color.orange)
-    }
+        }
+    }.listStyle(GroupedListStyle())
+    .navigationBarTitle("")
+    .navigationBarHidden(true)
+    .accentColor(Color.orange)
+}
 }
