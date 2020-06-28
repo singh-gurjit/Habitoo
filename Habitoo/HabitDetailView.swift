@@ -155,8 +155,8 @@ struct HabitDetailView: View {
             )
             
             VStack(spacing: 10) {
-                
-                ForEach(0..<7, id: \.self) { index in
+                //show acheivements
+                ForEach(0..<4, id: \.self) { index in
                     VStack(alignment: .leading) {
                         Text("November, 20 - 23").padding()
                             .font(Font.headline.weight(.semibold))
