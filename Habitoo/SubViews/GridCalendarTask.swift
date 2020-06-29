@@ -52,7 +52,7 @@ struct GridCalendarTask: View {
            .onAppear(){
                self.fetchResultFromDatabase = self.databaseUtil.taskRecordForThisMonth(tID: self.habitID) as! [Date]
                self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
-               print("filtered data - \(self.fetchResultFromDatabaseFiltered)")
+               //print("filtered data - \(self.fetchResultFromDatabaseFiltered)")
            }
        }
        

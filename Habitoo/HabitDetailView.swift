@@ -157,13 +157,12 @@ struct HabitDetailView: View {
             VStack(spacing: 10) {
                 //show acheivements
                 ForEach(0..<4, id: \.self) { index in
-                    VStack(alignment: .leading) {
-                        Text("November, 20 - 23").padding()
-                            .font(Font.headline.weight(.semibold))
-                            .foregroundColor(.orange)
-                        Text("You Have new record! As many as 4 days of stable training").padding()
-                            .font(Font.headline.weight(.medium))
-                            .foregroundColor(.gray)
+                    VStack {
+                        if self.category == "habit" {
+                            HabitMonthlyAcheivements(id: self.uuid)
+                        } else {
+                            TaskMonthlyAcheivements(id: self.uuid)
+                        }
                     }
                 }
             }

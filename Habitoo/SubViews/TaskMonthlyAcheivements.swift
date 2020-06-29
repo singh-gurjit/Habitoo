@@ -9,13 +9,29 @@
 import SwiftUI
 
 struct TaskMonthlyAcheivements: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    
+    var taskID: UUID = UUID()
+    var databaseUtil = CompleteDatabaseUtil()
+    @State var fetchResultFromDatabase = [Date]()
+    @State var fetchResultFromDatabaseFiltered = [String]()
+    var dateUtil = DateUtil()
+    
+    init(id: UUID) {
+        self.taskID = id
     }
-}
-
-struct TaskMonthlyAcheivements_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskMonthlyAcheivements()
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("November, 20 - 23").padding()
+                .font(Font.headline.weight(.semibold))
+                .foregroundColor(.orange)
+            Text("You Have new record! As many as 4 days of stable training").padding()
+                .font(Font.headline.weight(.medium))
+                .foregroundColor(.gray)
+        }.onAppear(){
+            self.fetchResultFromDatabase = self.databaseUtil.taskRecordForThisMonth(tID: self.taskID) as! [Date]
+            self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
+            //print("filtered data - \(self.fetchResultFromDatabaseFiltered)")
+        }
     }
 }
