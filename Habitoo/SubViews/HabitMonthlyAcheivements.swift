@@ -16,6 +16,11 @@ struct HabitMonthlyAcheivements: View {
     @State var fetchResultFromDatabaseFiltered = [String]()
     var dateUtil = DateUtil()
     @State var convertToInt = [Int]()
+    @State var consecutiveDays = []
+    @State var consecutiveThreeDays = [Any]()
+    @State var consecutiveSixDays = [Any]()
+    @State var consecutiiveTenDays = [Any]()
+    var data = [[1,2,3],[4,5,6],[7,8,9]]
     
     init(id: UUID) {
         self.habitID = id
@@ -23,6 +28,7 @@ struct HabitMonthlyAcheivements: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+        
             Text("November, 20 - 23").padding()
                 .font(Font.headline.weight(.semibold))
                 .foregroundColor(.orange)
@@ -32,24 +38,26 @@ struct HabitMonthlyAcheivements: View {
         }.onAppear(){
             self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.habitID) as! [Date]
             self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
-            
+            //convert string array to int array
             self.convertToInt = self.fetchResultFromDatabaseFiltered.map { Int($0)!}
             
-            let input = [1,2,4,6,7,10,12,13,14,18,19,33]
-            //check two elements and compare them and find element consecutive
-            let output = stride(from: 0, to: input.count - 1, by: 2).map{(input[$0], input[$0 + 1])}
-            //differences between elements
-            let differences = output.map({ $0.1 - $0.0 })
-            //how many are consitence
-            let onesCount = differences.filter({ $0 == 1}).count
-            let twoCount = differences.filter({ $0 == 2}).count
-            let threeCount = differences.filter({ $0 == 7}).count
-
-            print(differences)
-            print(onesCount)
-            print(twoCount)
-            print(threeCount)
-            
+            let myNumbersArray = [1,2,3,5,10,11,15,20,21,22,23,24,25,29,30]
+            let indexSet = IndexSet(myNumbersArray)
+            let rangeView = indexSet.rangeView
+            self.consecutiveDays = rangeView.map { Array($0.indices) }
+            //print(dateArray)
+//            for (_, item) in dateArray.enumerated() {
+//                for _ in item {
+//                    //print("index: \(index), item: \(item), \(item.count)")
+//                    if item.count == 3 {
+//                        self.consecutiveThreeDays.append(item)
+//                    } else if item.count == 6 {
+//                        self.consecutiveSixDays.append(item)
+//                    } else if item.count == 10 {
+//                        print("hola ten consecutive days")
+//                    }
+//                }
+//            }
             print("filtered data - \(self.fetchResultFromDatabaseFiltered)")
         }
     }
