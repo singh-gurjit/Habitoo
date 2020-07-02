@@ -12,19 +12,26 @@ import SwiftUI
 class DateUtil {
     
     var date = Date()
+    var collectionUtil = CollectionUtil()
     let formatter = DateFormatter()
     let formatterCurrentMonth = DateFormatter()
     let formatterCurrentYear = DateFormatter()
     var currentMonth = ""
     var currentYear = ""
     var arrayToReturn = [String]()
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
     
     //returns current day
      func getCurrentDay() -> String {
-        
         formatter.dateFormat = "d"
         return formatter.string(from: date)
     }
+    
+    func getCurrentMonth() -> String {
+           formatter.dateFormat = "LLLL"
+           //let convertStringToInt = collectionUtil.stringToInt(string: formatter.string(from: date))
+           return formatter.string(from: date)
+       }
     
     //returns arrays of current week days
     func currentWeekDays () -> [String] {

@@ -27,29 +27,38 @@ struct HabitMonthlyAcheivements: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading,spacing: 10) {
             
             ForEach(consecutiveDays, id:\.self) { array in
-                ForEach(array, id:\.self) { element in
-                    VStack(alignment:.leading) {
+                    VStack(alignment:.leading,spacing: 10) {
+                        //if find three consecutive days of completion
                         if array.count == 3 {
-                            Text("November, \(array.startIndex + 1) - \(array.endIndex)").padding()
+                            Text("\(self.dateUtil.getCurrentMonth()), \(array[array.startIndex]) - \(array[array.endIndex - 1])")
                                 .font(Font.headline.weight(.semibold))
                                 .foregroundColor(.orange)
-                            Text("You Have new record! As many as 3 days of stable training").padding()
-                                .font(Font.headline.weight(.medium))
-                                .foregroundColor(.gray)
-                        } else if array.count == 6 {
-                            Text("November, \(array.startIndex + 1) - \(array.endIndex)").padding()
-                                .font(Font.headline.weight(.semibold))
-                                .foregroundColor(.orange)
-                            Text("You Have new record! As many as 6 days of stable training").padding()
+                            Text("You Have new record! As many as 3 days of stable completion.")
                                 .font(Font.headline.weight(.medium))
                                 .foregroundColor(.gray)
                         }
-                        
+                        //if find five consecutive days of completion
+                        else if array.count == 5 {
+                            Text("\(self.dateUtil.getCurrentMonth()), \(array[array.startIndex]) - \(array[array.endIndex - 1])").padding()
+                                .font(Font.headline.weight(.semibold))
+                                .foregroundColor(.orange)
+                            Text("You Have new record! As many as 5 days of stable completion.").padding()
+                                .font(Font.headline.weight(.medium))
+                                .foregroundColor(.gray)
+                        }
+                        //if find seven consecutive days of completion
+                        else if array.count == 7 {
+                            Text("\(self.dateUtil.getCurrentMonth()), \(array[array.startIndex]) - \(array[array.endIndex - 1])")
+                                .font(Font.headline.weight(.semibold))
+                                .foregroundColor(.orange)
+                            Text("You Have new record! As many as 7 days of stable completion.")
+                                .font(Font.headline.weight(.medium))
+                                .foregroundColor(.gray)
+                        }
                     }
-                }
             }
         }.onAppear(){
             self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.habitID) as! [Date]
@@ -57,7 +66,7 @@ struct HabitMonthlyAcheivements: View {
             //convert string array to int array
             self.convertToInt = self.fetchResultFromDatabaseFiltered.map { Int($0)!}
             
-            let myNumbersArray = [1,2,3,5,10,11,15,20,21,22,23,24,25,29,30]
+            let myNumbersArray = [1,2,3,5,10,11,13,14,15,20,21,22,23,24,25,29,30,31]
             let indexSet = IndexSet(myNumbersArray)
             let rangeView = indexSet.rangeView
             self.consecutiveDays = rangeView.map { Array($0.indices) }
