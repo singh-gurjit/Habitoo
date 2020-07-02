@@ -16,7 +16,7 @@ struct HabitMonthlyAcheivements: View {
     @State var fetchResultFromDatabaseFiltered = [String]()
     var dateUtil = DateUtil()
     @State var convertToInt = [Int]()
-    @State var consecutiveDays = []
+    @State var consecutiveDays = [[Int]]()
     @State var consecutiveThreeDays = [Any]()
     @State var consecutiveSixDays = [Any]()
     @State var consecutiiveTenDays = [Any]()
@@ -28,13 +28,29 @@ struct HabitMonthlyAcheivements: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-        
-            Text("November, 20 - 23").padding()
-                .font(Font.headline.weight(.semibold))
-                .foregroundColor(.orange)
-            Text("You Have new record! As many as 4 days of stable training").padding()
-                .font(Font.headline.weight(.medium))
-                .foregroundColor(.gray)
+            
+            ForEach(consecutiveDays, id:\.self) { array in
+                ForEach(array, id:\.self) { element in
+                    VStack(alignment:.leading) {
+                        if array.count == 3 {
+                            Text("November, \(array.startIndex + 1) - \(array.endIndex)").padding()
+                                .font(Font.headline.weight(.semibold))
+                                .foregroundColor(.orange)
+                            Text("You Have new record! As many as 3 days of stable training").padding()
+                                .font(Font.headline.weight(.medium))
+                                .foregroundColor(.gray)
+                        } else if array.count == 6 {
+                            Text("November, \(array.startIndex + 1) - \(array.endIndex)").padding()
+                                .font(Font.headline.weight(.semibold))
+                                .foregroundColor(.orange)
+                            Text("You Have new record! As many as 6 days of stable training").padding()
+                                .font(Font.headline.weight(.medium))
+                                .foregroundColor(.gray)
+                        }
+                        
+                    }
+                }
+            }
         }.onAppear(){
             self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.habitID) as! [Date]
             self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
@@ -45,7 +61,8 @@ struct HabitMonthlyAcheivements: View {
             let indexSet = IndexSet(myNumbersArray)
             let rangeView = indexSet.rangeView
             self.consecutiveDays = rangeView.map { Array($0.indices) }
-            //print(dateArray)
+            
+            print(self.consecutiveDays)
 //            for (_, item) in dateArray.enumerated() {
 //                for _ in item {
 //                    //print("index: \(index), item: \(item), \(item.count)")

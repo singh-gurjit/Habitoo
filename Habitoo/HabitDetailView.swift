@@ -156,15 +156,13 @@ struct HabitDetailView: View {
             
             VStack(spacing: 10) {
                 //show acheivements
-                ForEach(0..<4, id: \.self) { index in
-                    VStack {
+                   
                         if self.category == "habit" {
                             HabitMonthlyAcheivements(id: self.uuid)
                         } else {
                             TaskMonthlyAcheivements(id: self.uuid)
                         }
-                    }
-                }
+                
             }
         }
     }.listStyle(GroupedListStyle())
