@@ -163,7 +163,7 @@ struct HabitDetailView: View {
                             TaskMonthlyAcheivements(id: self.uuid)
                         }
                 
-            }
+                }.padding()
         }
     }.listStyle(GroupedListStyle())
     .navigationBarTitle("")

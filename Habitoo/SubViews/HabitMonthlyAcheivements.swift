@@ -72,19 +72,7 @@ struct HabitMonthlyAcheivements: View {
             self.consecutiveDays = rangeView.map { Array($0.indices) }
             
             print(self.consecutiveDays)
-//            for (_, item) in dateArray.enumerated() {
-//                for _ in item {
-//                    //print("index: \(index), item: \(item), \(item.count)")
-//                    if item.count == 3 {
-//                        self.consecutiveThreeDays.append(item)
-//                    } else if item.count == 6 {
-//                        self.consecutiveSixDays.append(item)
-//                    } else if item.count == 10 {
-//                        print("hola ten consecutive days")
-//                    }
-//                }
-//            }
-            print("filtered data - \(self.fetchResultFromDatabaseFiltered)")
+            //print("filtered data - \(self.fetchResultFromDatabaseFiltered)")
         }
     }
 }
