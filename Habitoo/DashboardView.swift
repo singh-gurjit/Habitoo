@@ -53,7 +53,7 @@ struct DashboardView: View {
         listOfHabits = database.fetchHabitsFromDatabase()
         //seprate habit name from array
         arrayHabitName = listOfHabits[0] as! [String]
-        //sepeate habit id from array
+        //seprate habit id from array
         arrayHabitID = listOfHabits[1] as! [UUID]
         //fetch tasks list from database
         listOfTasks = database.fetchTasksFromDatabase()
