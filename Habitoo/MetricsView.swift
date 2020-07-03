@@ -21,6 +21,7 @@ struct MetricsView: View {
     
     private var arrayTaskName = [String]()
     private var arrayTaskID = [UUID]()
+    var collectionUtil = CollectionUtil()
     
     init() {
         //fetch habits list from database
@@ -88,20 +89,16 @@ struct MetricsView: View {
                 Section(header: Text("THIS WEEK").font(Font.subheadline.weight(.semibold))) {
                     
                     HStack {
-                        VStack {
-                            Text("3")
+                        VStack(alignment: .leading) {
+                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 2, total: arrayHabitName.count))%")
                             Text("Habits")
                         }
                         Spacer()
-                        VStack {
-                            Text("15")
-                            Text("Completion")
+                        VStack(alignment: .leading) {
+                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 7, total: arrayTaskName.count))%")
+                            Text("Tasks")
                         }
                         Spacer()
-                        VStack {
-                            Text("75%")
-                            Text("Complete")
-                        }
                     }.font(.headline)
                 }
                 

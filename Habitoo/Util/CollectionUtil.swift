@@ -34,4 +34,9 @@ class CollectionUtil {
         let date = formatter.date(from: stringDate)
         return date!
     }
+    
+    func calculateCompletionByWeek(completion: Int, total: Int) -> Int {
+        let calculate = ((completion * total) * 100) / (7 * total)
+        return calculate
+    }
 }
