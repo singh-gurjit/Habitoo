@@ -104,10 +104,6 @@ struct MetricsView: View {
                 
                 Section(header: Text("THIS MONTH").font(Font.subheadline.weight(.semibold))) {
                     VStack(alignment: .leading) {
-                        HStack {
-                            Text("55%")
-                            Text("Complete")
-                        }.font(.headline)
                         
                         VStack {
                             LineGraph(dataPoints: sampleData)
@@ -122,7 +118,7 @@ struct MetricsView: View {
                 
                 Section(header: Text("TOP HABITS").font(Font.subheadline.weight(.semibold))) {
                     VStack(spacing:10) {
-                        ForEach(0..<10) { index in
+                        ForEach(0..<arrayHabitID.count) { index in
                             HStack {
                                 Text("Meditate in the morning")
                                 Spacer()
