@@ -22,6 +22,8 @@ struct MetricsView: View {
     private var arrayTaskName = [String]()
     private var arrayTaskID = [UUID]()
     var collectionUtil = CollectionUtil()
+    @State var topHabitsCount = 0
+    @State var topHabitsArray = [Int]()
     
     init() {
         //fetch habits list from database
@@ -34,6 +36,10 @@ struct MetricsView: View {
         arrayTaskName = listOfTasks[0] as! [String]
         arrayTaskID = listOfTasks[1] as! [UUID]
     }
+    
+    @State var fetchResultFromDatabase = [Date]()
+    @State var fetchResultFromDatabaseFiltered = [String]()
+    var databaseUtil = CompleteDatabaseUtil()
     
     var body: some View {
         NavigationView {
@@ -120,10 +126,15 @@ struct MetricsView: View {
                     VStack(spacing:10) {
                         ForEach(0..<arrayHabitID.count) { index in
                             HStack {
-                                Text("Meditate in the morning")
+                                Text("\(self.arrayHabitName[index])")
                                 Spacer()
-                                Text("44%").foregroundColor(Color.orange)
+                                Text("\(self.topHabitsArray[0])").foregroundColor(Color.orange)
                             }.font(.headline)
+                            .onAppear() {
+                                self.topHabitsCount = self.databaseUtil.topHabitRecordForThisMonth(hID: self.arrayHabitID[index])
+                                self.topHabitsArray.append(self.topHabitsCount)
+                            }
+                            
                         }
                     }
                 }

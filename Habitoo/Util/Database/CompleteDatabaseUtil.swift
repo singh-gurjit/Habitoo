@@ -35,6 +35,7 @@ class CompleteDatabaseUtil: ObservableObject {
     @Published var fetchHabitRecordForThisMonth = [Any]()
     @Published var fetchHabitCompletedDateForThisMonth = [Date]()
     @Published var fetchTaskCompletedDateForThisMonth = [Date]()
+    @Published var topHabitsCount = 0
     
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -213,27 +214,6 @@ class CompleteDatabaseUtil: ObservableObject {
         return fetchResultForToday
     }
     
-//    func fetchTodaysHabitsAll(cDate: Date) -> Array<Any> {
-//
-//        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
-//        request.predicate = NSPredicate(format: "createdDate = %@", cDate as NSDate)
-//
-//        do {
-//            let fetchData = try moc.fetch(request)
-//            if fetchData.count > 0 {
-//                for data in fetchData as! [NSManagedObject] {
-//                    fetchResultForToday.append(data.value(forKey: "habitID") as! UUID)
-//                }
-//            } else {
-//                print("No record found")
-//            }
-//        } catch {
-//            print("Error while fetching data..")
-//        }
-//        //print("\(fetchResultForToday)")
-//        return fetchResultForToday
-//    }
-    
     //fetch particular habit record for this month
     func habitRecordForThisMonth(hID: UUID) -> Array<Any> {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
@@ -274,4 +254,23 @@ class CompleteDatabaseUtil: ObservableObject {
         return fetchTaskCompletedDateForThisMonth
     }
     
+    func topHabitRecordForThisMonth(hID: UUID) -> Int {
+           let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+           request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
+
+           do {
+               let fetchData = try moc.fetch(request)
+               if fetchData.count > 0 {
+                   for _ in fetchData as! [NSManagedObject] {
+                       topHabitsCount += 1
+                   }
+                //print("\(hID) - \(topHabitsCount)")
+               } else {
+                   print("No record found")
+               }
+           } catch {
+               print("Error while fetching data..")
+           }
+           return topHabitsCount
+       }
 }
