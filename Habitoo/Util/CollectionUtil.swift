@@ -39,4 +39,8 @@ class CollectionUtil {
         let calculate = ((completion * total) * 100) / (7 * total)
         return calculate
     }
+    
+    func calculatePercentage(from: Int, total: Int) -> Int{
+        return (from * 100) / (total)
+    }
 }

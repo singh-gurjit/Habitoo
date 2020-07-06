@@ -37,6 +37,15 @@ class CompleteDatabaseUtil: ObservableObject {
     @Published var fetchTaskCompletedDateForThisMonth = [Date]()
     @Published var topHabitsCount = 0
     
+    @Published var topHabitsCreatedDate = Date()
+    @Published var currentDate = Date()
+    @Published var dayCounts = 0
+    var dateFormatter = DateFormatter()
+    @Published var toptaskCount = 0
+    
+    @Published var topTaskCreatedDate = Date()
+    @Published var dayCountsTask = 0
+    
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
         moc = appDelegate.persistentContainer.viewContext
@@ -257,7 +266,7 @@ class CompleteDatabaseUtil: ObservableObject {
     func topHabitRecordForThisMonth(hID: UUID) -> Int {
            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
            request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
-
+            topHabitsCount = 0
            do {
                let fetchData = try moc.fetch(request)
                if fetchData.count > 0 {
@@ -273,4 +282,70 @@ class CompleteDatabaseUtil: ObservableObject {
            }
            return topHabitsCount
        }
+    
+        func topHabitCreatedDaysCount(hID: UUID) -> Int {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        request.predicate = NSPredicate(format: "id = %@", "\(hID)")
+
+        do {
+            let fetchData = try moc.fetch(request)
+            let data = fetchData[0] as! NSManagedObject
+            topHabitsCreatedDate = data.value(forKey: "createdDate") as! Date
+            let calendar = Calendar.current
+
+            // Replace the hour (time) of both dates with 00:00
+            let date1 = calendar.startOfDay(for: topHabitsCreatedDate)
+            let date2 = calendar.startOfDay(for: currentDate)
+
+            
+            let components = calendar.dateComponents([.day], from: date1, to: date2)
+            dayCounts = components.day ?? 0
+        } catch {
+            print("Error while fetching data..")
+        }
+        return dayCounts
+    }
+    
+    func topTasksRecordForThisMonth(tID: UUID) -> Int {
+           let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
+           request.predicate = NSPredicate(format: "taskID = %@", "\(tID)")
+           toptaskCount = 0
+           do {
+               let fetchData = try moc.fetch(request)
+               if fetchData.count > 0 {
+                   for _ in fetchData as! [NSManagedObject] {
+                       toptaskCount += 1
+                   }
+                //print("\(hID) - \(topHabitsCount)")
+               } else {
+                   print("No record found")
+               }
+           } catch {
+               print("Error while fetching data..")
+           }
+           return toptaskCount
+       }
+    
+        func topTaskCreatedDaysCount(tID: UUID) -> Int {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        request.predicate = NSPredicate(format: "id = %@", "\(tID)")
+
+        do {
+            let fetchData = try moc.fetch(request)
+            let data = fetchData[0] as! NSManagedObject
+            topTaskCreatedDate = data.value(forKey: "createdDate") as! Date
+            let calendar = Calendar.current
+
+            // Replace the hour (time) of both dates with 00:00
+            let date1 = calendar.startOfDay(for: topTaskCreatedDate)
+            let date2 = calendar.startOfDay(for: currentDate)
+
+            
+            let components = calendar.dateComponents([.day], from: date1, to: date2)
+            dayCountsTask = components.day ?? 0
+        } catch {
+            print("Error while fetching data..")
+        }
+        return dayCountsTask
+    }
 }

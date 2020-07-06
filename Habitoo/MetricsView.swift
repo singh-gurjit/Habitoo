@@ -122,18 +122,26 @@ struct MetricsView: View {
                     }
                 }
                 
-                Section(header: Text("TOP HABITS").font(Font.subheadline.weight(.semibold))) {
+                Section(header: Text("HABITS COMPLETION RATE").font(Font.subheadline.weight(.semibold))) {
                     VStack(spacing:10) {
                         ForEach(0..<arrayHabitID.count) { index in
                             HStack {
-                                Text("\(self.arrayHabitName[index])")
+                                Text("\(self.arrayHabitName[index])").foregroundColor(.orange)
                                 Spacer()
-                                Text("\(self.topHabitsArray[0])").foregroundColor(Color.orange)
+                                Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topHabitRecordForThisMonth(hID: self.arrayHabitID[index]),total: self.databaseUtil.topHabitCreatedDaysCount(hID: self.arrayHabitID[index])))%")
                             }.font(.headline)
-                            .onAppear() {
-                                self.topHabitsCount = self.databaseUtil.topHabitRecordForThisMonth(hID: self.arrayHabitID[index])
-                                self.topHabitsArray.append(self.topHabitsCount)
-                            }
+                            
+                        }
+                    }
+                }
+                Section(header: Text("TASKS COMPLETION RATE").font(Font.subheadline.weight(.semibold))) {
+                    VStack(spacing:10) {
+                        ForEach(0..<arrayTaskID.count) { index in
+                            HStack {
+                                Text("\(self.arrayTaskName[index])").foregroundColor(.orange)
+                                Spacer()
+                                Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topTasksRecordForThisMonth(tID: self.arrayTaskID[index]),total: self.databaseUtil.topTaskCreatedDaysCount(tID: self.arrayTaskID[index])))%")
+                            }.font(.headline)
                             
                         }
                     }
