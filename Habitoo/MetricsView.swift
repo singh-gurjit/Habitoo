@@ -24,6 +24,8 @@ struct MetricsView: View {
     var collectionUtil = CollectionUtil()
     @State var topHabitsCount = 0
     @State var topHabitsArray = [Int]()
+    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    private var completeDataBaseUtil = CompleteDatabaseUtil()
     
     init() {
         //fetch habits list from database
@@ -108,21 +110,26 @@ struct MetricsView: View {
                     }.font(.headline)
                 }
                 
-                Section(header: Text("THIS MONTH").font(Font.subheadline.weight(.semibold))) {
-                    VStack(alignment: .leading) {
+                Section(header: Text("THIS YEAR").font(Font.subheadline.weight(.semibold))) {
+                    VStack(alignment: .center) {
                         
-                        VStack {
-                            LineGraph(dataPoints: sampleData)
-                                .trim(to: on ? 1 : 0)
-                                .stroke(Color.orange, lineWidth: 2)
-                                .aspectRatio(16/9, contentMode: .fit)
-                                .border(Color.gray, width: 1)
-                                .padding()
+                        HStack {
+                          ForEach(0..<12) { month in
+                            VStack {
+                              Spacer()
+                              Rectangle()
+                                .fill(Color.orange)
+                                .frame(width: 20, height: self.completeDataBaseUtil.calculatePercentageThisYear() * 15.0)
+                                Text("\(self.months[month])")
+                                .font(.footnote)
+                                .frame(height: 20)
+                            }
+                          }
                         }
                     }
                 }
                 
-                Section(header: Text("HABITS COMPLETION RATE").font(Font.subheadline.weight(.semibold))) {
+                Section(header: Text("ALL TIME").font(Font.subheadline.weight(.semibold))) {
                     VStack(spacing:10) {
                         ForEach(0..<arrayHabitID.count) { index in
                             HStack {
@@ -133,8 +140,6 @@ struct MetricsView: View {
                             
                         }
                     }
-                }
-                Section(header: Text("TASKS COMPLETION RATE").font(Font.subheadline.weight(.semibold))) {
                     VStack(spacing:10) {
                         ForEach(0..<arrayTaskID.count) { index in
                             HStack {
@@ -146,6 +151,7 @@ struct MetricsView: View {
                         }
                     }
                 }
+               
             }.listStyle(GroupedListStyle())
                 .navigationBarTitle("")
                 .navigationBarHidden(true)

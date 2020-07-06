@@ -38,7 +38,6 @@ struct WeeklyCalendarTask: View {
     
     var body: some View {
         VStack {
-            
                 HStack(spacing: 15) {
                     ForEach(0 ..< 7, id: \.self) { index in
                         //self.content(row, column)

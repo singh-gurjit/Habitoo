@@ -348,4 +348,9 @@ class CompleteDatabaseUtil: ObservableObject {
         }
         return dayCountsTask
     }
+    
+    func calculatePercentageThisYear() -> CGFloat {
+        
+        return CGFloat(Int.random(in: 1..<10))
+    }
 }
