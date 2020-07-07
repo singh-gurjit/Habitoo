@@ -351,6 +351,10 @@ class CompleteDatabaseUtil: ObservableObject {
     
     func calculatePercentageThisYear() -> CGFloat {
         
+        //let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        
+        topHabitsCount = 0
+        
         return CGFloat(Int.random(in: 1..<10))
     }
 }

@@ -58,9 +58,12 @@ class DateUtil {
         for object in dateObjects {
             let splitArray = object.components(separatedBy: "-")
             if splitArray[0] == currentYear && splitArray[1] == currentMonth {
-                arrayToReturn.append("\(splitArray[2])")
+                //remove 0 from leading of string
+                let numberToInt = Int(splitArray[2])
+                arrayToReturn.append("\(numberToInt!)")
             }
         }
+        print(arrayToReturn)
         return arrayToReturn
     }
     
