@@ -227,7 +227,7 @@ class CompleteDatabaseUtil: ObservableObject {
     func habitRecordForThisMonth(hID: UUID) -> Array<Any> {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
         request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
-
+        fetchHabitCompletedDateForThisMonth.removeAll()
         do {
             let fetchData = try moc.fetch(request)
             if fetchData.count > 0 {

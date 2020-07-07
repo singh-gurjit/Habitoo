@@ -28,6 +28,7 @@ class DatabaseUtil {
     
     //property to return record by id
     var arrayResultByID = [Any]()
+    var name = ""
     
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -77,6 +78,24 @@ class DatabaseUtil {
         }
         
         return arrayHabitToReturn
+    }
+    
+    //fetch habit record from database
+    func fetchHabitName(hid: UUID) -> String {
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        //filter data with category habit
+        request.predicate = NSPredicate(format: "id = %@", "\(hid)")
+        do {
+            let fetchData = try moc.fetch(request)
+            let nameToFetch = fetchData[0] as! NSManagedObject
+            name = nameToFetch.value(forKey: "name") as! String
+              
+        } catch {
+            print("Error while fetching data..")
+        }
+        
+        return name
     }
     
     //fetch task record from database

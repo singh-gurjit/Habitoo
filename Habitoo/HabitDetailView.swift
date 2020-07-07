@@ -21,6 +21,7 @@ struct HabitDetailView: View {
     var items = [[Date]]()
     @State var category: String
     @State var currentViewType = "month"
+    var database = DatabaseUtil()
     
     var body: some View {
         List {
@@ -33,7 +34,7 @@ struct HabitDetailView: View {
                             self.presentationMode.wrappedValue.dismiss()
                     }
                     Spacer()
-                    Text("Meditate in the morning").foregroundColor(.gray)
+                    Text("\(self.database.fetchHabitName(hid: uuid))").foregroundColor(.gray)
                         .font(.headline)
                     
                     Spacer()
@@ -46,8 +47,6 @@ struct HabitDetailView: View {
                     }
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
                 
-                Text("8 AM, Everyday").foregroundColor(.gray)
-                    .font(.headline)
                 Divider()
                 HStack {
                     Spacer()

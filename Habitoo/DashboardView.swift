@@ -43,6 +43,11 @@ struct DashboardView: View {
     @State var listOfHabitsComplete = [Any]()
     @State var arrayHabitUUIDComplete = [UUID]()
     
+    //fetch current week record
+    @State var fetchResultFromDatabase = [Date]()
+    @State var fetchResultFromDatabaseFiltered = [String]()
+    var databaseUtil = CompleteDatabaseUtil()
+    
     init() {
         UITableView.appearance().separatorColor = .clear
         UITableView.appearance().backgroundColor = .clear
@@ -70,7 +75,7 @@ struct DashboardView: View {
     
     var body: some View {
         NavigationView {
-           VStack(alignment: .leading,spacing:10) {
+            VStack(alignment: .leading,spacing:10) {
                 HStack {
                     ForEach(0..<7) { index in
                         Spacer()
@@ -108,7 +113,6 @@ struct DashboardView: View {
                                 self.listOfHabitsComplete = self.completeDatabaseUtil.fetchCompletedHabits()
                                 self.arrayHabitUUIDComplete = self.listOfHabitsComplete[1] as! [UUID]
                                 //print("\(self.listOfHabitsComplete)")
-                                
                         }
                         ForEach(0..<arrayHabitName.count, id: \.self) { index in
                             VStack(alignment: .leading) {
@@ -121,22 +125,40 @@ struct DashboardView: View {
                                     
                                     ForEach(0..<7) { data in
                                         HStack {
-                                        if data == self.presentDateIndex {
-                                            HabitCompleteCheckBoxView(habitID: self.arrayHabitID[index],habitName: self.arrayHabitName[index])
-                                        } else {
-                                            Image(systemName: "circle")
-                                                .font(.headline)
-                                                .frame(minWidth: 0, maxWidth: .infinity)
-                                        }
+                                            if data == self.presentDateIndex {
+                                                HabitCompleteCheckBoxView(habitID: self.arrayHabitID[index],habitName: self.arrayHabitName[index])
+                                        
+                                            } else {
+                                                if self.fetchResultFromDatabaseFiltered.contains("6") {
+                                                   Image(systemName: "checkmark")
+                                                    .font(.headline)
+                                                    .foregroundColor(.gray)
+                                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                                } else {
+                                                    Image(systemName: "xmark")
+                                                    .font(.headline)
+                                                    .foregroundColor(.gray)
+                                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                                }
+                                                       
+                                            }
                                         }
                                     }
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
                             }.background(self.colorUtil.getlightGrayColor())
                                 .foregroundColor(Color.black)
                                 .cornerRadius(10)
+                            .onAppear() {
+                                self.fetchResultFromDatabaseFiltered.removeAll()
+                                self.fetchResultFromDatabase.removeAll()
+                                //fetch current week complete record
+                                self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.arrayHabitID[index]) as! [Date]
+                                self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
+                                print("\(self.fetchResultFromDatabaseFiltered)")
+                            }
+                            
                         }
-                        Text("You only 1 habit to do today!")
-                            .foregroundColor(Color.gray).font(.subheadline)
+                       
                         
                         Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))
                         

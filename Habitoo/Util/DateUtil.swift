@@ -52,7 +52,7 @@ class DateUtil {
         currentMonth = formatterCurrentMonth.string(from: date)
         formatterCurrentYear.dateFormat = "yyyy"
         currentYear = formatterCurrentYear.string(from: date)
-        
+        arrayToReturn.removeAll()
         formatter.dateFormat = "yyyy-MM-dd"
         let dateObjects = array.map{ formatter.string(from: $0) }
         for object in dateObjects {
@@ -63,7 +63,6 @@ class DateUtil {
                 arrayToReturn.append("\(numberToInt!)")
             }
         }
-        print(arrayToReturn)
         return arrayToReturn
     }
     
