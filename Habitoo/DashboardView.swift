@@ -43,11 +43,6 @@ struct DashboardView: View {
     @State var listOfHabitsComplete = [Any]()
     @State var arrayHabitUUIDComplete = [UUID]()
     
-    //fetch current week record
-    @State var fetchResultFromDatabase = [Date]()
-    @State var fetchResultFromDatabaseFiltered = [String]()
-    var databaseUtil = CompleteDatabaseUtil()
-    
     init() {
         UITableView.appearance().separatorColor = .clear
         UITableView.appearance().backgroundColor = .clear
@@ -123,24 +118,13 @@ struct DashboardView: View {
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
                                 HStack {
                                     
-                                    ForEach(0..<7) { data in
+                                    ForEach(0..<7) { i in
                                         HStack {
-                                            if data == self.presentDateIndex {
+                                            if self.currentWeekDays[i] == self.presentDay {
                                                 HabitCompleteCheckBoxView(habitID: self.arrayHabitID[index],habitName: self.arrayHabitName[index])
-                                        
-                                            } else {
-                                                if self.fetchResultFromDatabaseFiltered.contains("6") {
-                                                   Image(systemName: "checkmark")
-                                                    .font(.headline)
-                                                    .foregroundColor(.gray)
-                                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                                } else {
-                                                    Image(systemName: "xmark")
-                                                    .font(.headline)
-                                                    .foregroundColor(.gray)
-                                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                                }
-                                                       
+                                            }else {
+                                                DashboardHabitHistory(habitID: self.arrayHabitID[index],currentDay: self.currentWeekDays[i])
+                                                
                                             }
                                         }
                                     }
@@ -148,14 +132,6 @@ struct DashboardView: View {
                             }.background(self.colorUtil.getlightGrayColor())
                                 .foregroundColor(Color.black)
                                 .cornerRadius(10)
-                            .onAppear() {
-                                self.fetchResultFromDatabaseFiltered.removeAll()
-                                self.fetchResultFromDatabase.removeAll()
-                                //fetch current week complete record
-                                self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.arrayHabitID[index]) as! [Date]
-                                self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
-                                print("\(self.fetchResultFromDatabaseFiltered)")
-                            }
                             
                         }
                        

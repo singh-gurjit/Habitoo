@@ -357,4 +357,23 @@ class CompleteDatabaseUtil: ObservableObject {
         
         return CGFloat(Int.random(in: 1..<10))
     }
+    
+    func habitCheckWeek(hID: UUID) -> Array<Any> {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
+        fetchHabitCompletedDateForThisMonth.removeAll()
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for data in fetchData as! [NSManagedObject] {
+                    fetchHabitCompletedDateForThisMonth.append(data.value(forKey: "createdDate") as! Date)
+                }
+            } else {
+                print("No record found")
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        return fetchHabitCompletedDateForThisMonth
+    }
 }
