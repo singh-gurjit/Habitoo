@@ -24,8 +24,6 @@ struct MetricsView: View {
     var collectionUtil = CollectionUtil()
     @State var topHabitsCount = 0
     @State var topHabitsArray = [Int]()
-    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-    private var completeDataBaseUtil = CompleteDatabaseUtil()
     
     init() {
         //fetch habits list from database
@@ -42,6 +40,7 @@ struct MetricsView: View {
     @State var fetchResultFromDatabase = [Date]()
     @State var fetchResultFromDatabaseFiltered = [String]()
     var databaseUtil = CompleteDatabaseUtil()
+    var colorUtil = ColorUtil()
     
     var body: some View {
         NavigationView {
@@ -59,8 +58,8 @@ struct MetricsView: View {
                                         NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index], category: "habit")) {
                                             Text("\(self.arrayHabitName[index])")
                                                 .padding(8)
-                                                .foregroundColor(Color.white)
-                                                .background(Color.orange)
+                                                .foregroundColor(Color.orange)
+                                                .background(self.colorUtil.getlightGrayColor())
                                                 .cornerRadius(10)
                                         }
                                         
@@ -81,8 +80,8 @@ struct MetricsView: View {
                                         NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
                                             Text("\(self.arrayTaskName[index])")
                                                 .padding(8)
-                                                .foregroundColor(Color.white)
-                                                .background(Color.orange)
+                                                .foregroundColor(Color.orange)
+                                                .background(self.colorUtil.getlightGrayColor())
                                                 .cornerRadius(10)
                                         }
                                         
@@ -98,12 +97,12 @@ struct MetricsView: View {
                     
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 2, total: arrayHabitName.count))%")
+                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 2, total: arrayHabitName.count))%").foregroundColor(.orange)
                             Text("Habits")
                         }
                         Spacer()
                         VStack(alignment: .leading) {
-                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 7, total: arrayTaskName.count))%")
+                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 7, total: arrayTaskName.count))%").foregroundColor(.orange)
                             Text("Tasks")
                         }
                         Spacer()
@@ -113,18 +112,15 @@ struct MetricsView: View {
                 Section(header: Text("THIS YEAR").font(Font.subheadline.weight(.semibold))) {
                     VStack(alignment: .center) {
                         
+                        MetricsThisYear()
                         HStack {
-                          ForEach(0..<12) { month in
-                            VStack {
-                              Spacer()
-                              Rectangle()
-                                .fill(Color.orange)
-                                .frame(width: 20, height: self.completeDataBaseUtil.calculatePercentageThisYear() * 15.0)
-                                Text("\(self.months[month])")
-                                .font(.footnote)
-                                .frame(height: 20)
-                            }
-                          }
+                            Spacer()
+                            Image(systemName: "square.fill").foregroundColor(.orange)
+                            Text("Habits")
+                            Spacer()
+                            Image(systemName: "square.fill").foregroundColor(.green)
+                            Text("Tasks")
+                            Spacer()
                         }
                     }
                 }
@@ -133,9 +129,10 @@ struct MetricsView: View {
                     VStack(spacing:10) {
                         ForEach(0..<arrayHabitID.count) { index in
                             HStack {
-                                Text("\(self.arrayHabitName[index])").foregroundColor(.orange)
+                                Text("\(self.arrayHabitName[index])")
                                 Spacer()
                                 Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topHabitRecordForThisMonth(hID: self.arrayHabitID[index]),total: self.databaseUtil.topHabitCreatedDaysCount(hID: self.arrayHabitID[index])))%")
+                                    .foregroundColor(.orange)
                             }.font(.headline)
                             
                         }
@@ -143,9 +140,9 @@ struct MetricsView: View {
                     VStack(spacing:10) {
                         ForEach(0..<arrayTaskID.count) { index in
                             HStack {
-                                Text("\(self.arrayTaskName[index])").foregroundColor(.orange)
+                                Text("\(self.arrayTaskName[index])")
                                 Spacer()
-                                Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topTasksRecordForThisMonth(tID: self.arrayTaskID[index]),total: self.databaseUtil.topTaskCreatedDaysCount(tID: self.arrayTaskID[index])))%")
+                                Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topTasksRecordForThisMonth(tID: self.arrayTaskID[index]),total: self.databaseUtil.topTaskCreatedDaysCount(tID: self.arrayTaskID[index])))%").foregroundColor(.orange)
                             }.font(.headline)
                             
                         }

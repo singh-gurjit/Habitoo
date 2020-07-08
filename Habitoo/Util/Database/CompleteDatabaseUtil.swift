@@ -176,16 +176,16 @@ class CompleteDatabaseUtil: ObservableObject {
     }
     
     func searchCompletedHabits(hid: UUID, cDate: Date) {
-           
-           let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
-           let habitid = NSPredicate(format: "habitID = %@", "\(hid)")
-           let cdate = NSPredicate(format: "createdDate = %@", "\(cDate)")
-           let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [habitid, cdate])
-           request.predicate = andPredicate
-           
-           do {
-               let fetchData = try moc.fetch(request)
-               
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        let habitid = NSPredicate(format: "habitID = %@", "\(hid)")
+        let cdate = NSPredicate(format: "createdDate = %@", "\(cDate)")
+        let andPredicate = NSCompoundPredicate(type: .and, subpredicates: [habitid, cdate])
+        request.predicate = andPredicate
+        
+        do {
+            let fetchData = try moc.fetch(request)
+            
             if fetchData.count > 0 {
                 isHabitComplete = true
                 //print("found")
@@ -193,17 +193,17 @@ class CompleteDatabaseUtil: ObservableObject {
                 isHabitComplete = false
                 //print("not found")
             }
-           } catch {
-               print("Error while fetching data..")
-           }
-           //return isHabitComplete
-       }
+        } catch {
+            print("Error while fetching data..")
+        }
+        //return isHabitComplete
+    }
     
     func fetchTodaysHabits(cDate: Date) -> Array<Any> {
-    
+        
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
         request.predicate = NSPredicate(format: "createdDate = %@", cDate as NSDate)
-
+        
         do {
             let fetchData = try moc.fetch(request)
             if fetchData.count > 0 {
@@ -247,7 +247,7 @@ class CompleteDatabaseUtil: ObservableObject {
     func taskRecordForThisMonth(tID: UUID) -> Array<Any> {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
         request.predicate = NSPredicate(format: "taskID = %@", "\(tID)")
-
+        
         do {
             let fetchData = try moc.fetch(request)
             if fetchData.count > 0 {
@@ -264,39 +264,39 @@ class CompleteDatabaseUtil: ObservableObject {
     }
     
     func topHabitRecordForThisMonth(hID: UUID) -> Int {
-           let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
-           request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
-            topHabitsCount = 0
-           do {
-               let fetchData = try moc.fetch(request)
-               if fetchData.count > 0 {
-                   for _ in fetchData as! [NSManagedObject] {
-                       topHabitsCount += 1
-                   }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
+        topHabitsCount = 0
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for _ in fetchData as! [NSManagedObject] {
+                    topHabitsCount += 1
+                }
                 //print("\(hID) - \(topHabitsCount)")
-               } else {
-                   print("No record found")
-               }
-           } catch {
-               print("Error while fetching data..")
-           }
-           return topHabitsCount
-       }
+            } else {
+                print("No record found")
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        return topHabitsCount
+    }
     
-        func topHabitCreatedDaysCount(hID: UUID) -> Int {
+    func topHabitCreatedDaysCount(hID: UUID) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
         request.predicate = NSPredicate(format: "id = %@", "\(hID)")
-
+        
         do {
             let fetchData = try moc.fetch(request)
             let data = fetchData[0] as! NSManagedObject
             topHabitsCreatedDate = data.value(forKey: "createdDate") as! Date
             let calendar = Calendar.current
-
+            
             // Replace the hour (time) of both dates with 00:00
             let date1 = calendar.startOfDay(for: topHabitsCreatedDate)
             let date2 = calendar.startOfDay(for: currentDate)
-
+            
             
             let components = calendar.dateComponents([.day], from: date1, to: date2)
             dayCounts = components.day ?? 0
@@ -307,39 +307,38 @@ class CompleteDatabaseUtil: ObservableObject {
     }
     
     func topTasksRecordForThisMonth(tID: UUID) -> Int {
-           let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
-           request.predicate = NSPredicate(format: "taskID = %@", "\(tID)")
-           toptaskCount = 0
-           do {
-               let fetchData = try moc.fetch(request)
-               if fetchData.count > 0 {
-                   for _ in fetchData as! [NSManagedObject] {
-                       toptaskCount += 1
-                   }
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
+        request.predicate = NSPredicate(format: "taskID = %@", "\(tID)")
+        toptaskCount = 0
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for _ in fetchData as! [NSManagedObject] {
+                    toptaskCount += 1
+                }
                 //print("\(hID) - \(topHabitsCount)")
-               } else {
-                   print("No record found")
-               }
-           } catch {
-               print("Error while fetching data..")
-           }
-           return toptaskCount
-       }
+            } else {
+                print("No record found")
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        return toptaskCount
+    }
     
-        func topTaskCreatedDaysCount(tID: UUID) -> Int {
+    func topTaskCreatedDaysCount(tID: UUID) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
         request.predicate = NSPredicate(format: "id = %@", "\(tID)")
-
+        
         do {
             let fetchData = try moc.fetch(request)
             let data = fetchData[0] as! NSManagedObject
             topTaskCreatedDate = data.value(forKey: "createdDate") as! Date
             let calendar = Calendar.current
-
+            
             // Replace the hour (time) of both dates with 00:00
             let date1 = calendar.startOfDay(for: topTaskCreatedDate)
             let date2 = calendar.startOfDay(for: currentDate)
-
             
             let components = calendar.dateComponents([.day], from: date1, to: date2)
             dayCountsTask = components.day ?? 0
@@ -349,13 +348,66 @@ class CompleteDatabaseUtil: ObservableObject {
         return dayCountsTask
     }
     
-    func calculatePercentageThisYear() -> CGFloat {
+    func calculatePercentageThisYearHabit(month: Int) -> CGFloat {
+        let currentMon = month + 1
+        var countCompletion = 0
+        let formatterCurrentMonth = DateFormatter()
+        formatterCurrentMonth.dateFormat = "MM"
         
-        //let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
         
-        topHabitsCount = 0
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for data in fetchData as! [NSManagedObject] {
+                    let date = data.value(forKey: "createdDate") as! Date
+                    let currentMonth = formatterCurrentMonth.string(from: date)
+                    let monthAsInt = Int(currentMonth)
+                    //print("date - \(monthAsInt!)")
+                    if currentMon == monthAsInt {
+                        countCompletion += 1
+                    }
+                }
+            } else {
+                countCompletion = 0
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        //print("Month - \(currentMon) , \(countCompletion)")
+        return CGFloat(countCompletion)
+    }
+    
+    
+    func calculatePercentageThisYearTask(month: Int) -> CGFloat {
         
-        return CGFloat(Int.random(in: 1..<10))
+        let currentMon = month + 1
+        var countCompletion = 0
+        let formatterCurrentMonth = DateFormatter()
+        formatterCurrentMonth.dateFormat = "MM"
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
+        
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for data in fetchData as! [NSManagedObject] {
+                    let date = data.value(forKey: "createdDate") as! Date
+                    let currentMonth = formatterCurrentMonth.string(from: date)
+                    let monthAsInt = Int(currentMonth)
+                    //print("date - \(monthAsInt!)")
+                    if currentMon == monthAsInt {
+                        countCompletion += 1
+                    }
+                }
+            } else {
+                countCompletion = 0
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        print("Month - \(currentMon) , \(countCompletion)")
+        return CGFloat(countCompletion)
     }
     
     func habitCheckWeek(hID: UUID) -> Array<Any> {

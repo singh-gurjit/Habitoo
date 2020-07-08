@@ -66,8 +66,8 @@ struct HabitMonthlyAcheivements: View {
             //convert string array to int array
             self.convertToInt = self.fetchResultFromDatabaseFiltered.map { Int($0)!}
             
-            let myNumbersArray = [1,2,3,5,10,11,13,14,15,20,21,22,23,24,25,29,30,31]
-            let indexSet = IndexSet(myNumbersArray)
+            //let myNumbersArray = [1,2,3,5,10,11,13,14,15,20,21,22,23,24,25,29,30,31]
+            let indexSet = IndexSet(self.convertToInt)
             let rangeView = indexSet.rangeView
             self.consecutiveDays = rangeView.map { Array($0.indices) }
             

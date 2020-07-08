@@ -35,7 +35,7 @@ struct DashboardHabitHistory: View {
         }.onAppear() {
             self.fetchResultFromDatabase = self.databaseUtil.habitRecordForThisMonth(hID: self.habitID) as! [Date]
             self.fetchResultFromDatabaseFiltered = self.dateUtil.filterDateFromCurrentMonth(array: self.fetchResultFromDatabase)
-            print("\(self.fetchResultFromDatabaseFiltered)")
+            //print("\(self.fetchResultFromDatabaseFiltered)")
         }
     }
 }

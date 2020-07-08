@@ -117,7 +117,6 @@ struct DashboardView: View {
                                         .foregroundColor(.orange)
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
                                 HStack {
-                                    
                                     ForEach(0..<7) { i in
                                         HStack {
                                             if self.currentWeekDays[i] == self.presentDay {
