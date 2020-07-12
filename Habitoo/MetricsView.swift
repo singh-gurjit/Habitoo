@@ -111,18 +111,19 @@ struct MetricsView: View {
                 
                 Section(header: Text("THIS YEAR").font(Font.subheadline.weight(.semibold))) {
                     VStack(alignment: .center) {
-                        
+        
                         MetricsThisYear()
-                        HStack {
-                            Spacer()
-                            Image(systemName: "square.fill").foregroundColor(.orange)
-                            Text("Habits")
-                            Spacer()
-                            Image(systemName: "square.fill").foregroundColor(.green)
-                            Text("Tasks")
-                            Spacer()
+                       
+//                        HStack {
+//                            Spacer()
+//                            Image(systemName: "square.fill").foregroundColor(.orange)
+//                            Text("Habits")
+//                            Spacer()
+//                            Image(systemName: "square.fill").foregroundColor(.green)
+//                            Text("Tasks")
+//                            Spacer()
+//                        }
                         }
-                    }
                 }
                 
                 Section(header: Text("ALL TIME").font(Font.subheadline.weight(.semibold))) {

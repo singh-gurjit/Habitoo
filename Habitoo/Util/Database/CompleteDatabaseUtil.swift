@@ -348,11 +348,24 @@ class CompleteDatabaseUtil: ObservableObject {
         return dayCountsTask
     }
     
-    func calculatePercentageThisYearHabit(month: Int) -> CGFloat {
+    func calculatePercentageThisYearHabit(month: Int) -> Int {
         let currentMon = month + 1
         var countCompletion = 0
         let formatterCurrentMonth = DateFormatter()
         formatterCurrentMonth.dateFormat = "MM"
+        var habitCount = 0
+        
+        let request1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        //filter data with category habit
+        request1.predicate = NSPredicate(format: "category = %@", "habit")
+        do {
+            let fetchData1 = try moc.fetch(request1)
+            for _ in fetchData1 as! [NSManagedObject] {
+                habitCount += 1
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
         
@@ -368,6 +381,7 @@ class CompleteDatabaseUtil: ObservableObject {
                         countCompletion += 1
                     }
                 }
+                 countCompletion = (countCompletion * 100) / (30 * habitCount)
             } else {
                 countCompletion = 0
             }
@@ -375,16 +389,30 @@ class CompleteDatabaseUtil: ObservableObject {
             print("Error while fetching data..")
         }
         //print("Month - \(currentMon) , \(countCompletion)")
-        return CGFloat(countCompletion)
+        return countCompletion
     }
     
     
-    func calculatePercentageThisYearTask(month: Int) -> CGFloat {
+    func calculatePercentageThisYearTask(month: Int) -> Int {
         
         let currentMon = month + 1
         var countCompletion = 0
         let formatterCurrentMonth = DateFormatter()
         formatterCurrentMonth.dateFormat = "MM"
+        
+        var taskCount = 0
+        
+        let request1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        //filter data with category habit
+        request1.predicate = NSPredicate(format: "category = %@", "task")
+        do {
+            let fetchData1 = try moc.fetch(request1)
+            for _ in fetchData1 as! [NSManagedObject] {
+                taskCount += 1
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
         
@@ -400,6 +428,7 @@ class CompleteDatabaseUtil: ObservableObject {
                         countCompletion += 1
                     }
                 }
+                countCompletion = (countCompletion * 100) / (30 * taskCount)
             } else {
                 countCompletion = 0
             }
@@ -407,10 +436,11 @@ class CompleteDatabaseUtil: ObservableObject {
             print("Error while fetching data..")
         }
         print("Month - \(currentMon) , \(countCompletion)")
-        return CGFloat(countCompletion)
+        return countCompletion
     }
     
     func habitCheckWeek(hID: UUID) -> Array<Any> {
+        
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
         request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
         fetchHabitCompletedDateForThisMonth.removeAll()
