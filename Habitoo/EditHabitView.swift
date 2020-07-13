@@ -23,6 +23,7 @@ struct EditHabitView: View {
     var collectionUtil = CollectionUtil()
     let weekDays = ["S","M","T","W","T","F","S"]
     @State var selectedWeekDays = [Int]()
+    @State var successDeletion = 0
     
     init(uuid: UUID) {
         self.uuid = uuid
@@ -162,20 +163,23 @@ struct EditHabitView: View {
                         Text("Cancel").foregroundColor(Color.black).font(.headline)
                     }
                     Spacer()
-                    Button(action: {
-                        self.deletedSuccess = true
-                    }) {
-                        Text("Delete").padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
-                            .font(.headline)
-                            .foregroundColor(Color.white)
-                            .background(Color.gray)
-                            .cornerRadius(20)
-                    }.alert(isPresented: $deletedSuccess) {
-                        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete?"), primaryButton: .destructive(Text("Delete")) {
-                            self.databaseUtil.deleteHabit(uuid: self.uuid)
-                            self.presentationMode.wrappedValue.dismiss()
-                            }, secondaryButton: .cancel())
-                    }
+//                    Button(action: {
+//                        self.deletedSuccess = true
+//                    }) {
+//                        Text("Delete").padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
+//                            .font(.headline)
+//                            .foregroundColor(Color.white)
+//                            .background(Color.gray)
+//                            .cornerRadius(20)
+//                    }.alert(isPresented: $deletedSuccess) {
+//                        //display alert before delete
+//                        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete?"), primaryButton: .destructive(Text("Delete")) {
+//                            //call function to delete particular habit
+//                            self.databaseUtil.deleteHabit(uuid: self.uuid)
+//                            //dismiss view
+//                            self.presentationMode.wrappedValue.dismiss()
+//                            }, secondaryButton: .cancel())
+//                    }
                     
                     Button(action: {
                         

@@ -88,8 +88,12 @@ class DatabaseUtil {
         request.predicate = NSPredicate(format: "id = %@", "\(hid)")
         do {
             let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
             let nameToFetch = fetchData[0] as! NSManagedObject
             name = nameToFetch.value(forKey: "name") as! String
+            } else {
+                name = "nil"
+            }
               
         } catch {
             print("Error while fetching data..")

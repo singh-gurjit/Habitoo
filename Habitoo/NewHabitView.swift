@@ -141,7 +141,7 @@ struct NewHabitView: View{
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
             HStack {
                 Button(action: {
-                    
+                    self.presentationMode.wrappedValue.dismiss()
                 }) {
                     Text("Cancel").foregroundColor(Color.black).font(.headline)
                 }

@@ -22,12 +22,13 @@ struct HabitDetailView: View {
     @State var category: String
     @State var currentViewType = "month"
     var database = DatabaseUtil()
+    @State var showDeleteAlert = false
     
     var body: some View {
         List {
             VStack(alignment: .leading) {
                 
-                HStack {
+                HStack(alignment:.center) {
                     Image(systemName: "chevron.left").foregroundColor(.orange)
                         .font(Font.title.weight(.semibold))
                         .onTapGesture {
@@ -38,6 +39,20 @@ struct HabitDetailView: View {
                         .font(.headline)
                     
                     Spacer()
+                    Image(systemName: "trash").foregroundColor(.orange)
+                        .font(Font.title.weight(.regular))
+                        .onTapGesture {
+                            //self.isEditHabbitShown.toggle()
+                            self.showDeleteAlert.toggle()
+                        }.alert(isPresented: $showDeleteAlert) {
+                        //display alert before delete
+                        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete?"), primaryButton: .destructive(Text("Delete")) {
+                            //call function to delete particular habit
+                            self.database.deleteHabit(uuid: self.uuid)
+                            //dismiss view
+                            self.presentationMode.wrappedValue.dismiss()
+                            }, secondaryButton: .cancel())
+                    }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8))
                     Image(systemName: "pencil").foregroundColor(.orange)
                         .font(Font.title.weight(.semibold))
                         .onTapGesture {

@@ -109,6 +109,7 @@ struct DashboardView: View {
                                 self.arrayHabitUUIDComplete = self.listOfHabitsComplete[1] as! [UUID]
                                 //print("\(self.listOfHabitsComplete)")
                         }
+                        if arrayHabitID.count > 0 {
                         ForEach(0..<arrayHabitName.count, id: \.self) { index in
                             VStack(alignment: .leading) {
                                 NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index],category: "habit")) {
@@ -133,10 +134,13 @@ struct DashboardView: View {
                                 .cornerRadius(10)
                             
                         }
-                       
+                        } else {
+                            Text("No record found")
+                        }
                         
                         Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))
                         
+                        if arrayTaskName.count > 0 {
                         ForEach(0..<arrayTaskName.count, id: \.self) { index in
                             HStack {
                                 Text("\(self.arrayTaskName[index])")
@@ -149,7 +153,9 @@ struct DashboardView: View {
                             }
                             
                         }
-                        
+                        } else {
+                            Text("No record found")
+                        }
                         
                     }
                     

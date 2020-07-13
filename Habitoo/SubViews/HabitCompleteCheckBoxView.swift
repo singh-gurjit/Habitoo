@@ -45,7 +45,7 @@ struct HabitCompleteCheckBoxView: View {
                 print("added..\(self.habitID)")
                 self.completeDatabaseUtil.insertCompletedHabit(habitName: self.habitName, uuid: self.habitID, cDate: self.collectionUtil.dateFormat(date: self.date))
             } else {
-                print("removed..\(self.completedHabitIndex)")
+                print("removed..\(self.completedHabitIndex) on \(self.completedHabitIndex)")
                 self.completeDatabaseUtil.deleteHabitCompleted(id: self.fetchResultId[self.completedHabitIndex])
                 self.fetchResultId.remove(at: self.completedHabitIndex)
                 self.fetchResultHabitId.remove(at: self.completedHabitIndex)

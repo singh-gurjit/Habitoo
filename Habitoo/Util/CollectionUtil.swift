@@ -36,11 +36,20 @@ class CollectionUtil {
     }
     
     func calculateCompletionByWeek(completion: Int, total: Int) -> Int {
-        let calculate = ((completion * total) * 100) / (7 * total)
-        return calculate
+        if total == 0 {
+            return 0
+        } else {
+            let calculate = ((completion * total) * 100) / (7 * total)
+            return calculate
+        }
+        
     }
     
     func calculatePercentage(from: Int, total: Int) -> Int{
-        return (from * 100) / (total)
+        if total == 0 {
+            return 0
+        } else {
+            return (from * 100) / (total)
+        }
     }
 }
