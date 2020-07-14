@@ -25,9 +25,11 @@ struct DashboardView: View {
     
     private var arrayHabitName = [String]()
     private var arrayHabitID = [UUID]()
-    
+    private var arrayHabitWeekDays = [String]()
+     
     private var arrayTaskName = [String]()
     private var arrayTaskID = [UUID]()
+    private var arrayTaskWeekDays = [String]()
     
     @ObservedObject var completeDatabaseUtil = CompleteDatabaseUtil()
     
@@ -55,10 +57,13 @@ struct DashboardView: View {
         arrayHabitName = listOfHabits[0] as! [String]
         //seprate habit id from array
         arrayHabitID = listOfHabits[1] as! [UUID]
+        //seprate habit id from array
+        arrayHabitWeekDays = listOfHabits[2] as! [String]
         //fetch tasks list from database
         listOfTasks = database.fetchTasksFromDatabase()
         arrayTaskName = listOfTasks[0] as! [String]
         arrayTaskID = listOfTasks[1] as! [UUID]
+        arrayTaskWeekDays = listOfTasks[2] as! [String]
         //fetch completes tasks list
         listOfTasksComplete = completeDatabaseUtil.fetchCompletedTasks()
         //fetch task name completed
@@ -116,16 +121,18 @@ struct DashboardView: View {
                                     Text("\(self.arrayHabitName[index])").padding()
                                         .font(Font.headline.weight(.semibold))
                                         .foregroundColor(.orange)
+                                        
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
                                 HStack {
                                     ForEach(0..<7) { i in
                                         HStack {
-                                            if self.currentWeekDays[i] == self.presentDay {
-                                                HabitCompleteCheckBoxView(habitID: self.arrayHabitID[index],habitName: self.arrayHabitName[index])
-                                            }else {
-                                                DashboardHabitHistory(habitID: self.arrayHabitID[index],currentDay: self.currentWeekDays[i])
-                                                
-                                            }
+                                            
+                                                if self.currentWeekDays[i] == self.presentDay {
+                                                    HabitCompleteCheckBoxView(habitID: self.arrayHabitID[index],habitName: self.arrayHabitName[index], currentIndex: i, weekDays: self.arrayHabitWeekDays[index])
+                                                }else {
+                                                    DashboardHabitHistory(habitID: self.arrayHabitID[index],currentDay: self.currentWeekDays[i], currentIndex: i, weekDays: self.arrayHabitWeekDays[index])
+                                                }
+                                            
                                         }
                                     }
                                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))

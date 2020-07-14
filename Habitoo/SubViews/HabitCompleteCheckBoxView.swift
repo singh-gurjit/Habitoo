@@ -20,6 +20,9 @@ struct HabitCompleteCheckBoxView: View {
     var collectionUtil = CollectionUtil()
     @State var isHabitComplete = false
     @State var completedHabitIndex = 0
+    @State var currentIndex: Int
+    @State var weekDays: String
+    @State var arrayWeekDays = [String]()
     
     var body: some View {
         
@@ -27,17 +30,25 @@ struct HabitCompleteCheckBoxView: View {
             
         }) {
             //check habit completed or not and display completed circle according to it
-            if isHabitComplete {
-                Image(systemName: "checkmark.circle")
-                    .font(.title)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .foregroundColor(.orange)
+            if self.arrayWeekDays.contains("\(currentIndex)") {
+                if isHabitComplete {
+                    Image(systemName: "checkmark.circle")
+                        .font(.title)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .foregroundColor(.orange)
+                } else {
+                    Image(systemName: "circle")
+                        .font(.title)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .foregroundColor(.orange)
+                }
             } else {
-                Image(systemName: "circle")
-                    .font(.title)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .foregroundColor(.orange)
+                Image(systemName: "minus")
+                .font(.headline)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .foregroundColor(.gray)
             }
+            
         }.onTapGesture {
             self.isHabitComplete.toggle()
             //check if habit completed or not and insert record in database
@@ -67,6 +78,7 @@ struct HabitCompleteCheckBoxView: View {
                 //print("false")
                 self.isHabitComplete = false
             }
+            self.arrayWeekDays = self.collectionUtil.stringToArray(string: self.weekDays)
         }
         
     }

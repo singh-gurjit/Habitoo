@@ -435,7 +435,7 @@ class CompleteDatabaseUtil: ObservableObject {
         } catch {
             print("Error while fetching data..")
         }
-        print("Month - \(currentMon) , \(countCompletion)")
+        //print("Month - \(currentMon) , \(countCompletion)")
         return countCompletion
     }
     

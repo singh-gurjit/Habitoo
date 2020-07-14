@@ -52,4 +52,9 @@ class CollectionUtil {
             return (from * 100) / (total)
         }
     }
+    
+    func stringToArray(string: String) -> Array<String> {
+        let array = string.components(separatedBy: ",")
+        return array
+    }
 }

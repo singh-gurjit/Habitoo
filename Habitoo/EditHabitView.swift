@@ -134,27 +134,28 @@ struct EditHabitView: View {
                     }
                 }
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
-                HStack {
-                    if self.isReminderSet {
-                        Image(systemName: "checkmark.square").font(.title).foregroundColor(Color.black)
-                            .onTapGesture {
-                                self.isReminderSet.toggle()
-                        }
-                    } else {
-                        Image(systemName: "stop").font(.title).foregroundColor(Color.gray)
-                            .onTapGesture {
-                                self.isReminderSet.toggle()
-                        }
-                        
-                    }
-                    Text("Receive a reminder").font(.headline).foregroundColor(Color.gray)
-                }
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
-                HStack {
-                    if self.isReminderSet {
-                        DatePicker("", selection: $remAlarm, displayedComponents: .hourAndMinute)
-                    }
-                }
+                    //Set reminder notification
+//                HStack {
+//                    if self.isReminderSet {
+//                        Image(systemName: "checkmark.square").font(.title).foregroundColor(Color.black)
+//                            .onTapGesture {
+//                                self.isReminderSet.toggle()
+//                        }
+//                    } else {
+//                        Image(systemName: "stop").font(.title).foregroundColor(Color.gray)
+//                            .onTapGesture {
+//                                self.isReminderSet.toggle()
+//                        }
+//
+//                    }
+//                    Text("Receive a reminder").font(.headline).foregroundColor(Color.gray)
+//                }
+//                .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
+//                HStack {
+//                    if self.isReminderSet {
+//                        DatePicker("", selection: $remAlarm, displayedComponents: .hourAndMinute)
+//                    }
+//                }
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
                 HStack {
                     Button(action: {

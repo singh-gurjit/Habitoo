@@ -78,7 +78,7 @@ struct MetricsView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             
                             HStack {
-                                if arrayHabitName.count > 0 {
+                                if arrayTaskID.count > 0 {
                                 ForEach(0..<arrayTaskName.count, id: \.self) { index in
                                     HStack {
                                         

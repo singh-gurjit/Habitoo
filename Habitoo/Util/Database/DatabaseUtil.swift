@@ -21,10 +21,12 @@ class DatabaseUtil {
     var arrayHabitToReturn = [[Any]]()
     var arrayHabitName = [String]()
     var arrayHabitID = [UUID]()
+    var arrayHabitWeekDays = [String]()
     
     var arrayTaskToReturn = [[Any]]()
     var arrayTaskName = [String]()
     var arrayTaskID = [UUID]()
+    var arrayTaskWeekDays = [String]()
     
     //property to return record by id
     var arrayResultByID = [Any]()
@@ -69,10 +71,12 @@ class DatabaseUtil {
             for data in fetchData as! [NSManagedObject] {
                 arrayHabitName.append(data.value(forKey: "name") as! String)
                 arrayHabitID.append(data.value(forKey: "id") as! UUID)
+                arrayHabitWeekDays.append(data.value(forKey: "weekDays") as! String)
             }
             
             arrayHabitToReturn.append(arrayHabitName)
             arrayHabitToReturn.append(arrayHabitID)
+            arrayHabitToReturn.append(arrayHabitWeekDays)
         } catch {
             print("Error while fetching data..")
         }
@@ -113,10 +117,12 @@ class DatabaseUtil {
             for data in fetchData as! [NSManagedObject] {
                 arrayTaskName.append(data.value(forKey: "name") as! String)
                 arrayTaskID.append(data.value(forKey: "id") as! UUID)
+                arrayTaskWeekDays.append(data.value(forKey: "weekDays") as! String)
             }
             
             arrayTaskToReturn.append(arrayTaskName)
             arrayTaskToReturn.append(arrayTaskID)
+            arrayTaskToReturn.append(arrayTaskWeekDays)
         } catch {
             print("Error while fetching data..")
         }
