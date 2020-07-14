@@ -52,6 +52,7 @@ struct MetricsView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             
                             HStack {
+                                if arrayHabitName.count > 0 {
                                 ForEach(0..<arrayHabitName.count, id: \.self) { index in
                                     HStack {
                                         
@@ -66,6 +67,9 @@ struct MetricsView: View {
                                     }
                                     
                                 }
+                                } else {
+                                    Text("No record found")
+                                }
                             }
                         }
                     }
@@ -74,6 +78,7 @@ struct MetricsView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             
                             HStack {
+                                if arrayHabitName.count > 0 {
                                 ForEach(0..<arrayTaskName.count, id: \.self) { index in
                                     HStack {
                                         
@@ -87,6 +92,9 @@ struct MetricsView: View {
                                         
                                     }
                                     
+                                }
+                                } else {
+                                    Text("No record found")
                                 }
                             }
                         }
@@ -148,6 +156,7 @@ struct MetricsView: View {
                             
                         }
                     }
+    
                 }
                
             }.listStyle(GroupedListStyle())
