@@ -152,11 +152,12 @@ struct DashboardView: View {
                             HStack {
                                 Text("\(self.arrayTaskName[index])")
                                     .font(Font.headline.weight(.semibold))
+                                    
                                 NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
                                     EmptyView()
                                 }.buttonStyle(PlainButtonStyle())
                                 Spacer()
-                                TasksCheckBoxView(taskID: self.arrayTaskID[index])
+                                TasksCheckBoxView(taskID: self.arrayTaskID[index], weekDays: self.arrayTaskWeekDays[index])
                             }
                             
                         }

@@ -33,44 +33,44 @@ struct EditHabitView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading,spacing: 15) {
-                HStack {
-                    Spacer()
-                    if isHabit {
-                        Text("Habit").padding(EdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20))
-                            .font(.headline)
-                            .foregroundColor(Color.white)
-                            .background(Color.orange)
-                            .cornerRadius(20)
-                            .onTapGesture {
-                                self.isHabit.toggle()
-                                self.currrentType = "habit"
-                        }
-                        Spacer()
-                        Text("Task").font(.headline)
-                            .onTapGesture {
-                                self.isHabit.toggle()
-                                self.currrentType = "task"
-                        }
-                    } else {
-                        Text("Habit").font(.headline)
-                            .onTapGesture {
-                                self.isHabit.toggle()
-                        }
-                        Spacer()
-                        Text("Task").padding(EdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20))
-                            .font(.headline)
-                            .foregroundColor(Color.white)
-                            .background(Color.orange)
-                            .cornerRadius(20)
-                            .onTapGesture {
-                                self.isHabit.toggle()
-                        }
-                    }
-                    
-                    
-                    Spacer()
-                }.padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
-                
+//                HStack {
+//                    Spacer()
+//                    if isHabit {
+//                        Text("Habit").padding(EdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20))
+//                            .font(.headline)
+//                            .foregroundColor(Color.white)
+//                            .background(Color.orange)
+//                            .cornerRadius(20)
+//                            .onTapGesture {
+//                                self.isHabit.toggle()
+//                                self.currrentType = "habit"
+//                        }
+//                        Spacer()
+//                        Text("Task").font(.headline)
+//                            .onTapGesture {
+//                                self.isHabit.toggle()
+//                                self.currrentType = "task"
+//                        }
+//                    } else {
+//                        Text("Habit").font(.headline)
+//                            .onTapGesture {
+//                                self.isHabit.toggle()
+//                        }
+//                        Spacer()
+//                        Text("Task").padding(EdgeInsets(top: 15, leading: 20, bottom: 15, trailing: 20))
+//                            .font(.headline)
+//                            .foregroundColor(Color.white)
+//                            .background(Color.orange)
+//                            .cornerRadius(20)
+//                            .onTapGesture {
+//                                self.isHabit.toggle()
+//                        }
+//                    }
+//
+//
+//                    Spacer()
+//                }.padding(EdgeInsets(top: 20, leading: 0, bottom: 20, trailing: 0))
+            
                 TextField("Name", text: $habitName).font(.headline)
                     .onAppear() {
                         self.uuid = self.fetchRecordByID[5] as! UUID
@@ -86,7 +86,7 @@ struct EditHabitView: View {
                             //convert string to integer array
                             self.selectedWeekDays = self.collectionUtil.stringToIntArray(string: weekDays)
                         }
-                }
+                }.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
                 Divider().background(Color.orange)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
                 
@@ -191,7 +191,13 @@ struct EditHabitView: View {
                             .background(Color.orange)
                             .cornerRadius(20)
                             .onTapGesture {
-                                self.databaseUtil.updateHabitRecord(uuid: self.uuid, name: self.habitName, category: self.currrentType, isReminder: self.isReminderSet, remTime: self.remAlarm, weekDays: self.collectionUtil.arrayToString(array: self.selectedWeekDays))
+                                if self.databaseUtil.fetchHabitType(hid: self.uuid) == "habit" {
+                                      self.databaseUtil.updateHabitRecord(uuid: self.uuid, name: self.habitName, category: "habit", isReminder: self.isReminderSet, remTime: self.remAlarm, weekDays: self.collectionUtil.arrayToString(array: self.selectedWeekDays))
+                                }
+                                else {
+                                   self.databaseUtil.updateHabitRecord(uuid: self.uuid, name: self.habitName, category: "task", isReminder: self.isReminderSet, remTime: self.remAlarm, weekDays: self.collectionUtil.arrayToString(array: self.selectedWeekDays))
+                                }
+                            
                                 self.presentationMode.wrappedValue.dismiss()
                         }
                     }

@@ -23,6 +23,13 @@ struct TasksCheckBoxView: View {
     @State var completedTaskCount = 0
     @State var arrayCompleted = [Any]()
     @State var checkBoxImage = "stop"
+    @State var currentIndex: Int = 0
+    @State var weekDays: String
+    @State var arrayWeekDays = [String]()
+    @State var currentWeekDays = [String]()
+    var dateUtil = DateUtil()
+    @State var presentDay: String = ""
+    @State var currentDayIndex = 0
     
     var body: some View {
         VStack {
@@ -33,9 +40,15 @@ struct TasksCheckBoxView: View {
                 self.arrayTaskUUIDComplete = self.listOfTasksComplete[1] as! [UUID]
                 self.arrayTaskDateComplete = self.listOfTasksComplete[2] as! [Date]
                 self.completedTaskCount = self.arrayTaskIDComplete.count
+                self.arrayWeekDays = self.collectionUtil.stringToArray(string: self.weekDays)
+                self.presentDay = self.dateUtil.getCurrentDay()
+                self.currentWeekDays = self.dateUtil.currentWeekDays()
+                //print("\(self.arrayWeekDays), \(self.currentWeekDays), \(self.presentDay)")
+                self.currentDayIndex = self.currentWeekDays.firstIndex(of: self.presentDay)!
+                //print("\(self.currentDayIndex)")
             }
             
-            HStack {
+            HStack(alignment:.center) {
                 
                 //check if task is completed or not
                 ForEach(0..<self.arrayTaskIDComplete.count, id: \.self) { index in
@@ -51,9 +64,8 @@ struct TasksCheckBoxView: View {
                     }.hidden()
                 }
                 //if completed task found
+                if self.arrayWeekDays.contains("\(currentDayIndex)") {
                 if self.completedTaskFound {
-                    
-                    
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(Color.orange)
                         .font(Font.title.weight(.medium))
@@ -71,6 +83,11 @@ struct TasksCheckBoxView: View {
                             self.completeDatabaseUtil.insertCompletedTask(uuid: self.taskID!, cDate: self.collectionUtil.dateFormat(date: self.date))
                             self.completedTaskFound.toggle()
                     }
+                }
+                } else {
+                    Image(systemName: "minus")
+                    .foregroundColor(Color.gray)
+                    .font(Font.title.weight(.medium))
                 }
             }
         }
