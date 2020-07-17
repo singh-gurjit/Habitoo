@@ -41,6 +41,7 @@ struct DashboardHabitHistory: View {
                 .font(.headline)
                 .foregroundColor(.gray)
                 .frame(minWidth: 0, maxWidth: .infinity)
+                    .opacity(0.5)
             }
             
            

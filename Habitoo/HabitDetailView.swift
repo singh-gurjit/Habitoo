@@ -28,7 +28,7 @@ struct HabitDetailView: View {
         List {
             VStack(alignment: .leading) {
                 
-                HStack(alignment:.center) {
+                HStack {
                     Image(systemName: "chevron.left").foregroundColor(.orange)
                         .font(Font.title.weight(.semibold))
                         .onTapGesture {
@@ -39,8 +39,16 @@ struct HabitDetailView: View {
                         .font(.headline)
                     
                     Spacer()
+                    
+                    Image(systemName: "pencil.circle").foregroundColor(.orange)
+                        .font(Font.title.weight(.semibold))
+                        .onTapGesture {
+                            self.isEditHabbitShown.toggle()
+                    }.sheet(isPresented: self.$isEditHabbitShown) {
+                        EditHabitView(uuid: self.uuid)
+                    }.padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
                     Image(systemName: "trash").foregroundColor(.orange)
-                        .font(Font.title.weight(.regular))
+                       .font(.system(size: 25))
                         .onTapGesture {
                             //self.isEditHabbitShown.toggle()
                             self.showDeleteAlert.toggle()
@@ -52,14 +60,7 @@ struct HabitDetailView: View {
                             //dismiss view
                             self.presentationMode.wrappedValue.dismiss()
                             }, secondaryButton: .cancel())
-                    }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8))
-                    Image(systemName: "pencil").foregroundColor(.orange)
-                        .font(Font.title.weight(.semibold))
-                        .onTapGesture {
-                            self.isEditHabbitShown.toggle()
-                    }.sheet(isPresented: self.$isEditHabbitShown) {
-                        EditHabitView(uuid: self.uuid)
-                    }
+                    }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
                 
                 Divider()

@@ -118,19 +118,19 @@ struct MetricsView: View {
                 }
                 
                 Section(header: Text("THIS YEAR").font(Font.subheadline.weight(.semibold))) {
-                    VStack(alignment: .center) {
+                    VStack(alignment: .leading) {
         
                         MetricsThisYear()
                        
-//                        HStack {
-//                            Spacer()
-//                            Image(systemName: "square.fill").foregroundColor(.orange)
-//                            Text("Habits")
-//                            Spacer()
-//                            Image(systemName: "square.fill").foregroundColor(.green)
-//                            Text("Tasks")
-//                            Spacer()
-//                        }
+                        HStack {
+                            Spacer()
+                            Image(systemName: "square.fill").foregroundColor(.orange)
+                            Text("Habits").font(.subheadline)
+                            Spacer()
+                            Image(systemName: "square.fill").foregroundColor(.green)
+                            Text("Tasks").font(.subheadline)
+                            Spacer()
+                        }.padding(EdgeInsets(top: 8, leading: 0, bottom: 0, trailing: 0))
                         }
                 }
                 
@@ -149,7 +149,7 @@ struct MetricsView: View {
                     VStack(spacing:10) {
                         ForEach(0..<arrayTaskID.count) { index in
                             HStack {
-                                Text("\(self.arrayTaskName[index])")
+                                //Text("\(self.arrayTaskName[index])")
                                 Spacer()
                                 Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topTasksRecordForThisMonth(tID: self.arrayTaskID[index]),total: self.databaseUtil.topTaskCreatedDaysCount(tID: self.arrayTaskID[index])))%").foregroundColor(.orange)
                             }.font(.headline)

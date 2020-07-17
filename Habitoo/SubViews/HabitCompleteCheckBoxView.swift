@@ -47,6 +47,7 @@ struct HabitCompleteCheckBoxView: View {
                 .font(.headline)
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .foregroundColor(.gray)
+                    .opacity(0.5)
             }
             
         }.onTapGesture {

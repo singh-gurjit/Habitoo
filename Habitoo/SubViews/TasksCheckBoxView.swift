@@ -32,7 +32,7 @@ struct TasksCheckBoxView: View {
     @State var currentDayIndex = 0
     
     var body: some View {
-        VStack {
+        VStack(alignment:.center) {
             Text("").onAppear() {
                 self.listOfTasksComplete = self.completeDatabaseUtil.fetchCompletedTasks()
                 //fetch task name completed
@@ -87,7 +87,9 @@ struct TasksCheckBoxView: View {
                 } else {
                     Image(systemName: "minus")
                     .foregroundColor(Color.gray)
-                    .font(Font.title.weight(.medium))
+                        .font(Font.headline.weight(.medium))
+                        .opacity(0.5)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8))
                 }
             }
         }
