@@ -136,7 +136,7 @@ struct MetricsView: View {
                 
                 Section(header: Text("ALL TIME").font(Font.subheadline.weight(.semibold))) {
                     VStack(spacing:10) {
-                        ForEach(0..<arrayHabitID.count) { index in
+                        ForEach(0..<arrayHabitID.count, id:\.self) { index in
                             HStack {
                                 Text("\(self.arrayHabitName[index])")
                                 Spacer()
@@ -147,9 +147,9 @@ struct MetricsView: View {
                         }
                     }
                     VStack(spacing:10) {
-                        ForEach(0..<arrayTaskID.count) { index in
+                        ForEach(0..<arrayTaskID.count, id:\.self) { index in
                             HStack {
-                                //Text("\(self.arrayTaskName[index])")
+                                Text("\(self.arrayTaskName[index])")
                                 Spacer()
                                 Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topTasksRecordForThisMonth(tID: self.arrayTaskID[index]),total: self.databaseUtil.topTaskCreatedDaysCount(tID: self.arrayTaskID[index])))%").foregroundColor(.orange)
                             }.font(.headline)
