@@ -263,17 +263,21 @@ class CompleteDatabaseUtil: ObservableObject {
         return fetchTaskCompletedDateForThisMonth
     }
     
+    //fetching record about total number of completion of habits all time
     func topHabitRecordForThisMonth(hID: UUID) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
         request.predicate = NSPredicate(format: "habitID = %@", "\(hID)")
+        //intialize total counts to 0
         topHabitsCount = 0
         do {
+            //fetch record from database
             let fetchData = try moc.fetch(request)
             if fetchData.count > 0 {
                 for _ in fetchData as! [NSManagedObject] {
+                    //if found increase count by 1
                     topHabitsCount += 1
                 }
-                //print("\(hID) - \(topHabitsCount)")
+                //print("counts - \(hID) - \(topHabitsCount)")
             } else {
                 print("No record found")
             }
@@ -283,6 +287,7 @@ class CompleteDatabaseUtil: ObservableObject {
         return topHabitsCount
     }
     
+    //fetching record about habits days counting from date creation
     func topHabitCreatedDaysCount(hID: UUID) -> Int {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
         request.predicate = NSPredicate(format: "id = %@", "\(hID)")
@@ -297,12 +302,14 @@ class CompleteDatabaseUtil: ObservableObject {
             let date1 = calendar.startOfDay(for: topHabitsCreatedDate)
             let date2 = calendar.startOfDay(for: currentDate)
             
-            
+            //counting difference
             let components = calendar.dateComponents([.day], from: date1, to: date2)
             dayCounts = components.day ?? 0
+            //print("date created \(topHabitsCreatedDate), difference \(dayCounts)")
         } catch {
             print("Error while fetching data..")
         }
+        //returning difference between days of creation
         return dayCounts
     }
     

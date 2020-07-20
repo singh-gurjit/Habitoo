@@ -142,6 +142,9 @@ struct MetricsView: View {
                                 Spacer()
                                 Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topHabitRecordForThisMonth(hID: self.arrayHabitID[index]),total: self.databaseUtil.topHabitCreatedDaysCount(hID: self.arrayHabitID[index])))%")
                                     .foregroundColor(.orange)
+                                    .onAppear() {
+                                        print("habits - total : \(self.databaseUtil.topHabitCreatedDaysCount(hID: self.arrayHabitID[index])), from: \(self.databaseUtil.topHabitRecordForThisMonth(hID: self.arrayHabitID[index]))")
+                                }
                             }.font(.headline)
                             
                         }
@@ -152,6 +155,9 @@ struct MetricsView: View {
                                 Text("\(self.arrayTaskName[index])")
                                 Spacer()
                                 Text("\(self.collectionUtil.calculatePercentage(from: self.databaseUtil.topTasksRecordForThisMonth(tID: self.arrayTaskID[index]),total: self.databaseUtil.topTaskCreatedDaysCount(tID: self.arrayTaskID[index])))%").foregroundColor(.orange)
+                                .onAppear() {
+                                        print("tasks - total : \(self.databaseUtil.topTaskCreatedDaysCount(tID: self.arrayTaskID[index])), from: \(self.databaseUtil.topTasksRecordForThisMonth(tID: self.arrayTaskID[index]))")
+                                }
                             }.font(.headline)
                             
                         }
