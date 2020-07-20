@@ -62,6 +62,7 @@ struct MetricsView: View {
                                                 .foregroundColor(Color.orange)
                                                 .background(self.colorUtil.getlightGrayColor())
                                                 .cornerRadius(10)
+                                                
                                         }
                                         
                                     }
@@ -105,12 +106,12 @@ struct MetricsView: View {
                     
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 2, total: arrayHabitName.count))%").foregroundColor(.orange)
+                            Text("\(self.databaseUtil.habitWeeklyRecord())%").foregroundColor(.orange)
                             Text("Habits")
                         }
                         Spacer()
                         VStack(alignment: .leading) {
-                            Text("\(collectionUtil.calculateCompletionByWeek(completion: 7, total: arrayTaskName.count))%").foregroundColor(.orange)
+                            Text("\(self.databaseUtil.taskWeeklyRecord())%").foregroundColor(.orange)
                             Text("Tasks")
                         }
                         Spacer()

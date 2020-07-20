@@ -66,4 +66,13 @@ class DateUtil {
         return arrayToReturn
     }
     
+    //change date format
+    func dateFormatDay(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d"
+        let stringDate = formatter.string(from: date)
+        //let date = formatter.date(from: stringDate)
+        return stringDate
+    }
+    
 }

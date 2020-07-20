@@ -45,6 +45,7 @@ class CompleteDatabaseUtil: ObservableObject {
     
     @Published var topTaskCreatedDate = Date()
     @Published var dayCountsTask = 0
+    var dateUtil = DateUtil()
     
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -388,7 +389,10 @@ class CompleteDatabaseUtil: ObservableObject {
                         countCompletion += 1
                     }
                 }
-                 countCompletion = (countCompletion * 100) / (30 * habitCount)
+                 let total = (Double(countCompletion) / Double(habitCount))
+                 //countCompletion = (countCompletion * 100) / (30 * habitCount)
+                countCompletion = Int((total / 30) * 100)
+                //print("\(countCompletion), \(habitCount), \(percent)")
             } else {
                 countCompletion = 0
             }
@@ -435,7 +439,9 @@ class CompleteDatabaseUtil: ObservableObject {
                         countCompletion += 1
                     }
                 }
-                countCompletion = (countCompletion * 100) / (30 * taskCount)
+                let total = (Double(countCompletion) / Double(taskCount))
+                countCompletion = Int((total / 30) * 100)
+                //countCompletion = (countCompletion * 100) / (30 * taskCount)
             } else {
                 countCompletion = 0
             }
@@ -464,5 +470,85 @@ class CompleteDatabaseUtil: ObservableObject {
             print("Error while fetching data..")
         }
         return fetchHabitCompletedDateForThisMonth
+    }
+    
+    //check weekly record for metrics view
+    func habitWeeklyRecord() -> Int {
+        var numberOfHabits = 0
+        var percentage = 0
+        //fetch number of habits
+        let request1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        //filter data with category habit
+        request1.predicate = NSPredicate(format: "category = %@", "habit")
+        do {
+            let fetchData1 = try moc.fetch(request1)
+            numberOfHabits = fetchData1.count
+        } catch {
+            print("Error while fetching data..")
+        }
+        //fetch completed record this month
+        var count = 0
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for data in fetchData as! [NSManagedObject] {
+                    let date = dateUtil.dateFormatDay(date: data.value(forKey: "createdDate") as! Date)
+                    print("date - \(date), \(dateUtil.currentWeekDays())")
+                    if dateUtil.currentWeekDays().contains(date) {
+                        count += 1
+                    }
+                }
+                
+                let total = (Double(count) / Double(numberOfHabits))
+                percentage = Int((total / 7) * 100)
+                //print("percentage \(count), \(numberOfHabits) , \(total), \(percentage)")
+            } else {
+                print("No record found")
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        return percentage
+    }
+    
+    //check weekly record of tasks for metrics view
+    func taskWeeklyRecord() -> Int {
+        var numberOfHabits = 0
+        var percentage = 0
+        //fetch number of habits
+        let request1 = NSFetchRequest<NSFetchRequestResult>(entityName: "Habits")
+        //filter data with category habit
+        request1.predicate = NSPredicate(format: "category = %@", "task")
+        do {
+            let fetchData1 = try moc.fetch(request1)
+            numberOfHabits = fetchData1.count
+        } catch {
+            print("Error while fetching data..")
+        }
+        //fetch completed record this month
+        var count = 0
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
+        do {
+            let fetchData = try moc.fetch(request)
+            if fetchData.count > 0 {
+                for data in fetchData as! [NSManagedObject] {
+                    let date = dateUtil.dateFormatDay(date: data.value(forKey: "createdDate") as! Date)
+                    print("date - \(date), \(dateUtil.currentWeekDays())")
+                    if dateUtil.currentWeekDays().contains(date) {
+                        count += 1
+                    }
+                }
+                
+                let total = (Double(count) / Double(numberOfHabits))
+                percentage = Int((total / 7) * 100)
+                //print("percentage \(count), \(numberOfHabits) , \(total), \(percentage)")
+            } else {
+                print("No record found")
+            }
+        } catch {
+            print("Error while fetching data..")
+        }
+        return percentage
     }
 }
