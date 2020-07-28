@@ -121,6 +121,7 @@
 				E24948CB246C726A0035140D /* MetricsView.swift */,
 				E2260684246D4FDB007948DC /* HabitDetailView.swift */,
 				E2E56062247E69C40098F6BD /* EditHabitView.swift */,
+				E2A5EDE824D025F000E5ACD8 /* Models */,
 				E2B9FA8D247D14BC0098BA22 /* Menu */,
 				E2954AAE246F0E6200CF98BF /* SubViews */,
 				E2954AAD246F0E3A00CF98BF /* Util */,
@@ -181,6 +182,13 @@
 				E2F265FE2481D295009FB283 /* CompleteDatabaseUtil.swift */,
 			);
 			path = Database;
+			sourceTree = "<group>";
+		};
+		E2A5EDE824D025F000E5ACD8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		E2B9FA8D247D14BC0098BA22 /* Menu */ = {

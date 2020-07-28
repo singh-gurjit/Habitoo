@@ -46,6 +46,7 @@ class CompleteDatabaseUtil: ObservableObject {
     @Published var topTaskCreatedDate = Date()
     @Published var dayCountsTask = 0
     var dateUtil = DateUtil()
+    let todayDate = Date()
     
     init() {
         appDelegate = (UIApplication.shared.delegate as? AppDelegate)!
@@ -95,8 +96,13 @@ class CompleteDatabaseUtil: ObservableObject {
     
     //delete habit completed record
     func deleteHabitCompleted(id: UUID) {
+        let date = collectionUtil.dateFormat(date: todayDate)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HabitCompleted")
-        request.predicate = NSPredicate(format: "id = %@", "\(id)")
+        //request.predicate = NSPredicate(format: "id = %@", "\(id)")
+        let tID = NSPredicate(format: "habitID == %@", id as CVarArg)
+        let cDate = NSPredicate(format: "createdDate == %@", date as CVarArg)
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [tID, cDate])
+        request.predicate = andPredicate
         do {
             let fetchData = try moc.fetch(request)
             let dataToDelete = fetchData[0] as! NSManagedObject
@@ -114,17 +120,24 @@ class CompleteDatabaseUtil: ObservableObject {
     
     //delete task completed record
     func deleteTaskCompleted(id: UUID) {
+        let date = collectionUtil.dateFormat(date: todayDate)
+        //print("\(date), \(id)")
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "TaskCompleted")
-        request.predicate = NSPredicate(format: "id = %@", "\(id)")
+        //request.predicate = NSPredicate(format: "taskID = %@", "\(id)")
+        let tID = NSPredicate(format: "taskID == %@", id as CVarArg)
+        let cDate = NSPredicate(format: "createdDate == %@", date as CVarArg)
+        let andPredicate = NSCompoundPredicate(type: NSCompoundPredicate.LogicalType.and, subpredicates: [tID, cDate])
+        request.predicate = andPredicate
+        
         do {
             let fetchData = try moc.fetch(request)
             let dataToDelete = fetchData[0] as! NSManagedObject
             moc.delete(dataToDelete)
             do {
                 try moc.save()
-                //print("deleted")
+                print("deleted")
             } catch {
-                //print(error)
+                print(error)
             }
         } catch {
             print("Error while deleting data..")

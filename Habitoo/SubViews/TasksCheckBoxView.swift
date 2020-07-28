@@ -71,7 +71,8 @@ struct TasksCheckBoxView: View {
                         .font(Font.title.weight(.medium))
                         
                         .onTapGesture {
-                            self.completeDatabaseUtil.deleteTaskCompleted(id: self.arrayTaskIDComplete[self.completedTaskIndex])
+//                            self.completeDatabaseUtil.deleteTaskCompleted(id: self.arrayTaskIDComplete[self.completedTaskIndex])
+                            self.completeDatabaseUtil.deleteTaskCompleted(id: self.taskID!)
                             self.completedTaskFound.toggle()
                     }
                 } else {
@@ -82,6 +83,7 @@ struct TasksCheckBoxView: View {
                         .onTapGesture {
                             self.completeDatabaseUtil.insertCompletedTask(uuid: self.taskID!, cDate: self.collectionUtil.dateFormat(date: self.date))
                             self.completedTaskFound.toggle()
+                            //print("ad \(self.arrayTaskIDComplete[self.completedTaskIndex])")
                     }
                 }
                 } else {

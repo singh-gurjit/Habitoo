@@ -45,9 +45,15 @@ struct MetricsThisYear: View {
               Rectangle()
                 .fill(Color.orange)
                 .frame(width: 10, height: CGFloat(self.completeDataBaseUtil.calculatePercentageThisYearHabit(month: month)) * 18.0)
+                .onAppear() {
+                    print("habit \(month + 1) - \(self.completeDataBaseUtil.calculatePercentageThisYearHabit(month: month))")
+                    }
                 Rectangle()
                 .fill(Color.green)
                 .frame(width: 10, height: CGFloat(self.completeDataBaseUtil.calculatePercentageThisYearTask(month: month)) * 18.0)
+                    .onAppear() {
+                    print("task \(month + 1) - \(self.completeDataBaseUtil.calculatePercentageThisYearTask(month: month))")
+                    }
                 }
                 Text("\(month + 1)")
                 .font(.footnote)
