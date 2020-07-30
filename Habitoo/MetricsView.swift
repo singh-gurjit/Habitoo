@@ -24,6 +24,8 @@ struct MetricsView: View {
     var collectionUtil = CollectionUtil()
     @State var topHabitsCount = 0
     @State var topHabitsArray = [Int]()
+    @State var isTaskDetailShown = false
+    @State var isHabitDetailShown = false
     
     init() {
         //fetch habits list from database
@@ -56,14 +58,19 @@ struct MetricsView: View {
                                 ForEach(0..<arrayHabitName.count, id: \.self) { index in
                                     HStack {
                                         
-                                        NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index], category: "habit")) {
+//                                        NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index], category: "habit")) {
                                             Text("\(self.arrayHabitName[index])")
                                                 .padding(8)
                                                 .foregroundColor(Color.orange)
                                                 .background(self.colorUtil.getlightGrayColor())
                                                 .cornerRadius(10)
-                                                
-                                        }
+                                                .onTapGesture {
+                                                    self.isHabitDetailShown.toggle()
+                                            }
+                                            .sheet(isPresented: self.$isHabitDetailShown) {
+                                                HabitDetailView(uuid: self.arrayHabitID[index], category: "habit")
+                                            }
+                                       // }
                                         
                                     }
                                     
@@ -83,13 +90,19 @@ struct MetricsView: View {
                                 ForEach(0..<arrayTaskName.count, id: \.self) { index in
                                     HStack {
                                         
-                                        NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
+//                                        NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
                                             Text("\(self.arrayTaskName[index])")
                                                 .padding(8)
                                                 .foregroundColor(Color.orange)
                                                 .background(self.colorUtil.getlightGrayColor())
                                                 .cornerRadius(10)
+                                        .onTapGesture {
+                                                self.isTaskDetailShown.toggle()
                                         }
+                                        .sheet(isPresented: self.$isTaskDetailShown) {
+                                            HabitDetailView(uuid: self.arrayTaskID[index], category: "task")
+                                        }
+                                       // }
                                         
                                     }
                                     

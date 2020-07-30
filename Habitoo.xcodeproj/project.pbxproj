@@ -34,6 +34,7 @@
 		E2B3BDEE2482611000357106 /* TasksCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B3BDED2482610F00357106 /* TasksCheckBoxView.swift */; };
 		E2B9FA8F247D14EB0098BA22 /* DetailBackNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9FA8E247D14EB0098BA22 /* DetailBackNavigation.swift */; };
 		E2C3837A2478176200444F31 /* CollectionUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C383792478176200444F31 /* CollectionUtil.swift */; };
+		E2CB56A024D16D0D00352526 /* FetchRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CB569F24D16D0D00352526 /* FetchRecord.swift */; };
 		E2D0650224B5BEA90048AE89 /* MetricsThisYear.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D0650124B5BEA90048AE89 /* MetricsThisYear.swift */; };
 		E2E07A9B24A7915F00F564A2 /* GridCalendarTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E07A9A24A7915F00F564A2 /* GridCalendarTask.swift */; };
 		E2E07A9D24A7967700F564A2 /* WeeklyCalendarHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E07A9C24A7967700F564A2 /* WeeklyCalendarHabit.swift */; };
@@ -73,6 +74,7 @@
 		E2B3BDED2482610F00357106 /* TasksCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksCheckBoxView.swift; sourceTree = "<group>"; };
 		E2B9FA8E247D14EB0098BA22 /* DetailBackNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBackNavigation.swift; sourceTree = "<group>"; };
 		E2C383792478176200444F31 /* CollectionUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionUtil.swift; sourceTree = "<group>"; };
+		E2CB569F24D16D0D00352526 /* FetchRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRecord.swift; sourceTree = "<group>"; };
 		E2D0650124B5BEA90048AE89 /* MetricsThisYear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsThisYear.swift; sourceTree = "<group>"; };
 		E2E07A9A24A7915F00F564A2 /* GridCalendarTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCalendarTask.swift; sourceTree = "<group>"; };
 		E2E07A9C24A7967700F564A2 /* WeeklyCalendarHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarHabit.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		E2A5EDE824D025F000E5ACD8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E2CB569F24D16D0D00352526 /* FetchRecord.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				E2E56063247E69C40098F6BD /* EditHabitView.swift in Sources */,
 				E2260685246D4FDB007948DC /* HabitDetailView.swift in Sources */,
 				E2E07A9D24A7967700F564A2 /* WeeklyCalendarHabit.swift in Sources */,
+				E2CB56A024D16D0D00352526 /* FetchRecord.swift in Sources */,
 				E270BA6524A8B2A300225576 /* TaskMonthlyAcheivements.swift in Sources */,
 				E24948B8246C707D0035140D /* ContentView.swift in Sources */,
 				E2C3837A2478176200444F31 /* CollectionUtil.swift in Sources */,

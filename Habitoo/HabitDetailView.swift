@@ -29,9 +29,14 @@ struct HabitDetailView: View {
             VStack(alignment: .leading) {
                 
                 HStack {
-                    Image(systemName: "chevron.left").foregroundColor(.orange)
-                        .font(Font.title.weight(.semibold))
-                        .onTapGesture {
+                    Button(action: {
+                        
+                    }) {
+                        Text("Cancel").font(.headline)
+                    }
+//                    Image(systemName: "chevron.left").foregroundColor(.orange)
+//                        .font(Font.title.weight(.semibold))
+                    .onTapGesture {
                             self.presentationMode.wrappedValue.dismiss()
                     }
                     Spacer()
@@ -40,27 +45,32 @@ struct HabitDetailView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "pencil.circle").foregroundColor(.orange)
-                        .font(Font.title.weight(.semibold))
+                    Button(action: {
+                        
+                    }) {
+                        Text("Edit").font(.headline)
+                    }
+//                    Image(systemName: "pencil.circle").foregroundColor(.orange)
+//                        .font(Font.title.weight(.semibold))
                         .onTapGesture {
                             self.isEditHabbitShown.toggle()
                     }.sheet(isPresented: self.$isEditHabbitShown) {
                         EditHabitView(uuid: self.uuid)
                     }.padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
-                    Image(systemName: "trash").foregroundColor(.orange)
-                       .font(.system(size: 25))
-                        .onTapGesture {
-                            //self.isEditHabbitShown.toggle()
-                            self.showDeleteAlert.toggle()
-                        }.alert(isPresented: $showDeleteAlert) {
-                        //display alert before delete
-                        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete?"), primaryButton: .destructive(Text("Delete")) {
-                            //call function to delete particular habit
-                            self.database.deleteHabit(uuid: self.uuid)
-                            //dismiss view
-                            self.presentationMode.wrappedValue.dismiss()
-                            }, secondaryButton: .cancel())
-                    }.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
+//                    Image(systemName: "trash").foregroundColor(.orange)
+//                       .font(.system(size: 25))
+//                        .onTapGesture {
+//                            //self.isEditHabbitShown.toggle()
+//                            self.showDeleteAlert.toggle()
+//                        }.alert(isPresented: $showDeleteAlert) {
+//                        //display alert before delete
+//                        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete?"), primaryButton: .destructive(Text("Delete")) {
+//                            //call function to delete particular habit
+//                            self.database.deleteHabit(uuid: self.uuid)
+//                            //dismiss view
+//                            self.presentationMode.wrappedValue.dismiss()
+//                            }, secondaryButton: .cancel())
+                    //}.padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
                 }.padding(EdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0))
                 
                 Divider()

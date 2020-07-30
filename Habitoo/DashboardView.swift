@@ -44,6 +44,8 @@ struct DashboardView: View {
     var isHabitCompleteBtn = false
     var listOfHabitsComplete = [Any]()
     var arrayHabitUUIDComplete = [UUID]()
+    @State var isDetailShown = false
+    @State var isDetailHabitShown = false
     
     init() {
         UITableView.appearance().separatorColor = .clear
@@ -116,12 +118,19 @@ struct DashboardView: View {
                         if arrayHabitID.count > 0 {
                             ForEach(0..<arrayHabitName.count, id: \.self) { index in
                                 VStack(alignment: .leading) {
-                                    NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index],category: "habit")) {
+//                                    NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index],category: "habit")) {
                                         Text("\(self.arrayHabitName[index])").padding()
                                             .font(Font.headline.weight(.semibold))
                                             .foregroundColor(.orange)
+                                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
+                                            .onTapGesture {
+                                                self.isDetailHabitShown.toggle()
+                                            }
+                                            .sheet(isPresented: self.$isDetailHabitShown) {
+                                                HabitDetailView(uuid: self.arrayHabitID[index],category: "habit")
+                                            }
                                         
-                                    }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
+                                    //}.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
                                     HStack {
                                         ForEach(0..<7) { i in
                                             HStack {
@@ -139,6 +148,11 @@ struct DashboardView: View {
                                     .foregroundColor(Color.black)
                                     .cornerRadius(10)
                                 
+                            }//.onDelete(perform: deleteHabit)
+                            .onDelete { (indexSet) in
+                                for offset in indexSet {
+                                    //self.arrayHabitName.remove(at: offset)
+                                }
                             }
                         } else {
                             Text("No record found")
@@ -151,15 +165,21 @@ struct DashboardView: View {
                                 HStack {
                                     Text("\(self.arrayTaskName[index])")
                                         .font(Font.headline.weight(.semibold))
-                                    
-                                    NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
-                                        EmptyView()
-                                    }.buttonStyle(PlainButtonStyle())
+                                    .onTapGesture {
+                                        self.isDetailShown.toggle()
+                                    }
+                                    .sheet(isPresented: self.$isDetailShown) {
+                                        HabitDetailView(uuid: self.arrayTaskID[index], category: "task")
+                                    }
+//                                    NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
+//                                        EmptyView()
+//                                    }.buttonStyle(PlainButtonStyle())
                                     Spacer()
                                     TasksCheckBoxView(taskID: self.arrayTaskID[index], weekDays: self.arrayTaskWeekDays[index])
                                 }
                                 
-                            }
+                                
+                            }.onDelete(perform: deleteTask)
                         } else {
                             Text("No record found")
                         }
@@ -173,6 +193,19 @@ struct DashboardView: View {
             }.navigationBarTitle("")
                 .navigationBarHidden(true)
         }
+    }
+    
+    private func deleteHabit(with indexSet: IndexSet) {
+        //indexSet.forEach { islands.remove(at: $0) }
+        //for offset in indexSet {
+            //let habit = self.habitDb[offset]
+            //self.database.deleteHabit(uuid: self.arrayHabitID[offset])
+        //}
+        //arrayHabitName.remove(atOffsets: indexSet)
+    }
+    
+    private func deleteTask(with indexSet: IndexSet) {
+        
     }
 }
 
