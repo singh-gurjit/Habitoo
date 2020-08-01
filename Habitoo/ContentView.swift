@@ -20,7 +20,8 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 if self.viewNavigation.currentVisibleView == "home" {
-                    DashboardView()
+                    //DashboardView()
+                    Dash()
                 } else if self.viewNavigation.currentVisibleView == "metrics" {
                     MetricsView()
                 }

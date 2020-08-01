@@ -1,16 +1,14 @@
 //
-//  DashboardView.swift
+//  Dash.swift
 //  Habitoo
 //
-//  Created by Gurjit Singh on 13/05/20.
+//  Created by Gurjit Singh on 30/07/20.
 //  Copyright © 2020 Gurjit Singh. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 
-struct DashboardView: View {
-    
+struct Dash: View {
     private var date = Date()
     var dateUtil = DateUtil()
     var colorUtil = ColorUtil()
@@ -81,7 +79,10 @@ struct DashboardView: View {
     }
     
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: Habits.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Habits.createdDate, ascending: false)]) var habitDb: FetchedResults<Habits>
+    @FetchRequest(entity: Habits.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Habits.createdDate, ascending: false)], predicate: NSPredicate(format: "category == %@", "habit")) var habitDb: FetchedResults<Habits>
+    
+    @Environment(\.managedObjectContext) var mocTask
+    @FetchRequest(entity: Habits.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Habits.createdDate, ascending: false)], predicate: NSPredicate(format: "category == %@", "task")) var habitDbTasks: FetchedResults<Habits>
     
     var body: some View {
         NavigationView {
@@ -118,69 +119,67 @@ struct DashboardView: View {
                 VStack {
                     List {
                         Text("HABITS FOR TODAY").font(Font.subheadline.weight(.semibold))
-                        if arrayHabitID.count > 0 {
-                            ForEach(0..<arrayHabitName.count, id: \.self) { index in
-                                VStack(alignment: .leading) {
-//                                    NavigationLink(destination: HabitDetailView(uuid: self.arrayHabitID[index],category: "habit")) {
-                                        Text("\(self.arrayHabitName[index])").padding()
-                                            .font(Font.headline.weight(.semibold))
-                                            .foregroundColor(.orange)
-                                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
-                                            .onTapGesture {
-                                                self.isDetailHabitShown.toggle()
-                                            }
-                                            .sheet(isPresented: self.$isDetailHabitShown) {
-                                                HabitDetailView(uuid: self.arrayHabitID[index],category: "habit")
-                                            }
-                                        
-                                    //}.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
-                                    HStack {
-                                        ForEach(0..<7) { i in
-                                            HStack {
-                                                
-                                                if self.currentWeekDays[i] == self.presentDay {
-                                                    HabitCompleteCheckBoxView(habitID: self.arrayHabitID[index],habitName: self.arrayHabitName[index], currentIndex: i, weekDays: self.arrayHabitWeekDays[index])
-                                                }else {
-                                                    DashboardHabitHistory(habitID: self.arrayHabitID[index],currentDay: self.currentWeekDays[i], currentIndex: i, weekDays: self.arrayHabitWeekDays[index])
-                                                }
-                                                
-                                            }
-                                        }
-                                    }.padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
-                                }.background(self.colorUtil.getlightGrayColor())
-                                    .foregroundColor(Color.black)
-                                    .cornerRadius(10)
-                                
-                            }.onDelete(perform: deleteHabit)
+                        
+                        ForEach(habitDb, id: \.self) { item in
                             
-                        } else {
-                            Text("No record found")
+                            VStack(alignment: .leading) {
+                                Text("\(item.name!)").font(Font.headline.weight(.semibold))
+                                    .foregroundColor(.orange)
+                                    //.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 18))
+                                    .padding()
+                                
+                                HStack {
+                                    ForEach(0..<7) { i in
+                                        HStack {
+                                            
+                                            if self.currentWeekDays[i] == self.presentDay {
+                                                HabitCompleteCheckBoxView(habitID: item.id!,habitName: item.name!, currentIndex: i, weekDays: item.weekDays!)
+                                            }else {
+                                                DashboardHabitHistory(habitID: item.id!,currentDay: self.currentWeekDays[i], currentIndex: i, weekDays: item.weekDays!)
+                                            }
+                                            
+                                        }
+                                    }
+                                }.padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
+                            }.background(self.colorUtil.getlightGrayColor())
+                                .foregroundColor(Color.black)
+                                .cornerRadius(10)
+                                .onTapGesture {
+                                    self.isDetailHabitShown.toggle()
+                            }
+                            .sheet(isPresented: self.$isDetailHabitShown) {
+                                HabitDetailView(uuid: item.id!,category: "habit")
+                            }
+                        }.onDelete { (indexSet) in
+                            for offset in indexSet {
+                                let habit = self.habitDb[offset]
+                                self.moc.delete(habit)
+                            }
+                            try? self.moc.save()
                         }
                         
                         Text("TASKS FOR TODAY").font(Font.subheadline.weight(.semibold))
                         
-                        if arrayTaskName.count > 0 {
-                            ForEach(0..<arrayTaskName.count, id: \.self) { index in
-                                HStack {
-                                    Text("\(self.arrayTaskName[index])")
-                                        .font(Font.headline.weight(.semibold))
-                                    .onTapGesture {
-                                        self.isDetailShown.toggle()
-                                    }
-                                    .sheet(isPresented: self.$isDetailShown) {
-                                        HabitDetailView(uuid: self.arrayTaskID[index], category: "task")
-                                    }
-//                                    NavigationLink(destination: HabitDetailView(uuid: self.arrayTaskID[index], category: "task")) {
-//                                        EmptyView()
-//                                    }.buttonStyle(PlainButtonStyle())
-                                    Spacer()
-                                    TasksCheckBoxView(taskID: self.arrayTaskID[index], weekDays: self.arrayTaskWeekDays[index])
+                        ForEach(habitDbTasks, id: \.self) { item in
+                            HStack {
+                                Text("\(item.name!)")
+                                .font(Font.headline.weight(.semibold))
+                                .onTapGesture {
+                                    self.isDetailShown.toggle()
                                 }
-                                
-                                
-                            }.onDelete(perform: deleteTask)
-                        } else {
-                            Text("No record found")
+                                .sheet(isPresented: self.$isDetailShown) {
+                                    HabitDetailView(uuid: item.id!, category: "task")
+                                }
+                                Spacer()
+                                TasksCheckBoxView(taskID: item.id!, weekDays: item.weekDays!)
+                            }
+                        }
+                        .onDelete { (indexSet) in
+                            for offset in indexSet {
+                                let habit = self.habitDbTasks[offset]
+                                self.mocTask.delete(habit)
+                            }
+                            try? self.mocTask.save()
                         }
                         
                     }
@@ -192,13 +191,14 @@ struct DashboardView: View {
             }.navigationBarTitle("")
                 .navigationBarHidden(true)
         }
+        
     }
     
     private func deleteHabit(with indexSet: IndexSet) {
         //indexSet.forEach { islands.remove(at: $0) }
         //for offset in indexSet {
-            //let habit = self.habitDb[offset]
-            //self.database.deleteHabit(uuid: self.arrayHabitID[offset])
+        //let habit = self.habitDb[offset]
+        //self.database.deleteHabit(uuid: self.arrayHabitID[offset])
         //}
         //arrayHabitName.remove(atOffsets: indexSet)
         print("delete at \(indexSet)")
@@ -208,4 +208,3 @@ struct DashboardView: View {
         
     }
 }
-

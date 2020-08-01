@@ -40,6 +40,7 @@
 		E2E07A9D24A7967700F564A2 /* WeeklyCalendarHabit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E07A9C24A7967700F564A2 /* WeeklyCalendarHabit.swift */; };
 		E2E07A9F24A7969700F564A2 /* WeeklyCalendarTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E07A9E24A7969700F564A2 /* WeeklyCalendarTask.swift */; };
 		E2E56063247E69C40098F6BD /* EditHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E56062247E69C40098F6BD /* EditHabitView.swift */; };
+		E2EBD67524D311FA006C8A7D /* Dash.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBD67424D311FA006C8A7D /* Dash.swift */; };
 		E2F265FF2481D295009FB283 /* CompleteDatabaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F265FE2481D295009FB283 /* CompleteDatabaseUtil.swift */; };
 		E2FFFCAC248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FFFCAB248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,7 @@
 		E2E07A9C24A7967700F564A2 /* WeeklyCalendarHabit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarHabit.swift; sourceTree = "<group>"; };
 		E2E07A9E24A7969700F564A2 /* WeeklyCalendarTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarTask.swift; sourceTree = "<group>"; };
 		E2E56062247E69C40098F6BD /* EditHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitView.swift; sourceTree = "<group>"; };
+		E2EBD67424D311FA006C8A7D /* Dash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dash.swift; sourceTree = "<group>"; };
 		E2F265FE2481D295009FB283 /* CompleteDatabaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDatabaseUtil.swift; sourceTree = "<group>"; };
 		E2FFFCAB248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCompleteCheckBoxView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +122,7 @@
 				E24948B7246C707D0035140D /* ContentView.swift */,
 				E24948C9246C72590035140D /* DashboardView.swift */,
 				E24948CD246C73210035140D /* NewHabitView.swift */,
+				E2EBD67424D311FA006C8A7D /* Dash.swift */,
 				E24948CB246C726A0035140D /* MetricsView.swift */,
 				E2260684246D4FDB007948DC /* HabitDetailView.swift */,
 				E2E56062247E69C40098F6BD /* EditHabitView.swift */,
@@ -280,6 +283,7 @@
 				E2FFFCAC248BE28D00B459C4 /* HabitCompleteCheckBoxView.swift in Sources */,
 				E24948B6246C707D0035140D /* Habitoo.xcdatamodeld in Sources */,
 				E24948CC246C726A0035140D /* MetricsView.swift in Sources */,
+				E2EBD67524D311FA006C8A7D /* Dash.swift in Sources */,
 				E2E07A9B24A7915F00F564A2 /* GridCalendarTask.swift in Sources */,
 				E24948CA246C72590035140D /* DashboardView.swift in Sources */,
 				E2D0650224B5BEA90048AE89 /* MetricsThisYear.swift in Sources */,
